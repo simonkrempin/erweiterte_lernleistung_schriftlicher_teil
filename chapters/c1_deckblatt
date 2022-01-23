@@ -1,0 +1,24 @@
+\begin{titlepage}
+	\centering
+	\includegraphics[width=0.4\textwidth]{images/logo.png}\par\vspace{1cm}
+	{\scshape\LARGE Nepomucenum Coesfeld \par}
+	\vspace{1cm}
+	{\scshape\Large erweiterte Lernleistung Informatik\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Mobile Applikation zur Unterstützung des Lernprozesses\par}
+	\vspace{2cm}
+	{\Large\itshape Simon Krempin\par}
+	\vfill
+	begleitender Lehrer\par
+	\textsc{Jens Brumma}
+
+	\vfill
+
+% Bottom of the page
+	{\large 5. April 2022\par}
+\end{titlepage}
+\clearpage
+%\pagestyle{scrheadings}
+\tableofcontents
+\pagenumbering{gobble}
+\clearpage
