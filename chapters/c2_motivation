@@ -1,0 +1,7 @@
+\pagenumbering{arabic}
+\setcounter{page}{3}
+\chapter{Motivation} % erster Überblick über Programmiersprachen insgesamt
+Der Lernprozess ist der wichtigste Aspekt der Bildung. Dennoch wird dieser
+unzureichend unterstützt und nicht mit den neusten wissenschaftlichen Erkenntnissen
+untermalt. In dieser Arbeit werden verschiedene Lerntechniken untersucht und mithilfe
+von einer App den Schülern nahe gebracht.
