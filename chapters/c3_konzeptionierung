@@ -1,0 +1,160 @@
+\chapter{Konzeptionierung}
+
+% -------------------------------------------
+% Anforderungen
+% -------------------------------------------
+
+\section{Anforderungen}
+\label{section:rahmenbedingungen}
+Im Folgenden werden die Rahmenbedingungen und Anforderung an die Applikation im Hinblick auf die tägliche Nutzung der primären Zielgruppe Schüler definiert. Wie schon in der Motivation erörtert, ist das Hauptziel der Anwendung, Schüler so gut wie möglich beim Lernprozess zu unterstützten. In Betrachtung dieses Punktes werden drei Anforderungen an die Applikation erkennbar.
+\begin{description}
+\item[1. Die Applikation muss verständlich sein.]
+Dadurch, dass in der Schule viele unterschiedliche Kompetenzstufen zusammen kommen, muss eine solche Anwendung nicht nur fortgeschrittene Nutzer ansprechen, sondern jede Stufe abdecken. Während erfahrene Nutzer Prozesse aus dem Kontext mithilfe logischer Schlussfolgerung und übergreifenden Richtlinien ableiten können, fehlt diese Intuition den jüngeren. Somit ist es wichtig, die Applikation so einfach wie möglich zu gestalten. Das minimiert die Gefahr, dass kein Schüler durch technisches Ungeschick Nachteile erleidet. Unterstützt wird die benutzerfreundliche Oberlfäche durch eine detaillierte Anwendungshilfe.
+\item[2. Verfügbarkeit, unabhängig von den finanziellen Mitteln.]
+Ein offensichtlicher, \break dennoch oft vergessener Punkt ist, dass alle Schüler sich das Tool zunutze machen können sollen. Dabei ist die entscheidende Frage die Wahl der Plattform, da finanziell schwache Familien häfig weniger technische Hilfsmittel zur Verfügung stehen. Daraus ergibt sich die Herausforderung, auch diesen Kindern einen Zugriff auf optimale Lernmethoden und Umgebungen zu gewährleisten. Unter diesen Punkt fällt ebenfalls, dass die Applikation zu günstig wie möglich sein sollte, damit Bildung niemanden privilegiert.
+\item[3. Gleiche Informationsgrundlage für jeden Schüler.]
+Als Letztes ist eine gleiche Informationsgrundlage für einen gleichberechtigten Lernprozess von Nöten. Mithilfe von einer zentralen Sammlung des Lehrstoffs werden unterschiedliche Datenlagen ausgeschlossen. Eine solche Sammlung sollte durch Lehrkräfte verwaltet werden können. Damit können Unterrichtsmaterialien, Vokabellisten und weiterer Lernstoff einheitlich für Schüler bereitgestellt werden.
+\end{description}
+
+Die Anforderungen an eine Applikation, welche den Lernprozess unterstützt und damit Einfluss auf die Noten und das Verständnis der Schüler hat, sind hoch. Um diesen Anforderungen gerecht zu werden habe ich einige Tools genutzt, um das Programm möglichst detailreich zu planen, damit die Verbindungen und verschiedenen Elemente deutlich geplant sind und im Nachhinein keine Konflikte auftreten. In diesem Kapitel werde ich rudimentär auf die genutzten Tools eingehen und meine Entscheidungen bei der Planung erörtern.
+
+% -------------------------------------------
+% Funktionen
+% -------------------------------------------
+
+\section{Funktionen}
+In diesem Abschnitt werden die einzelnen Funktionen der Applikation erörtert. Dabei wird der Fokus auf Begründungen und Gedankengänge gelegt, welche im Abschnitt \ref{section:programmierung} implementiert werden. Die Funktionen der Applikation sind, unter besonderer Berücksichtigung der Rahmenbedingungen im Abschnitt \ref{section:rahmenbedingungen}, entstanden.\par
+
+\subsection{Dateimanagement}
+Dadurch, dass die Applikation für viele unterschiedliche Themen genutzt werden soll, ist eine Struktur für das Management nötig. Dafür wurde für das herkömmliche speichern von Daten zurückgegriffen. Ein Ordner repräsentiert ein Thema oder einen Unterricht. Ein Ordner kann beliebig viele Unterordner haben. Wenn in einem Ordner Unterordner sind, können keine Karten in den Ordner gefügt werden. 
+
+Jeder Ordner hat zugehörige Einstellungen, in welchen die Ordner umbenannt, veröffentlicht, verschoben, aufgelöst und gelöscht werden können. Veröffentlichen macht den Ordner zugänglich für jeden Nutzer der Anwendung, indem der Ordner auf den Server geladen wird. Dieser wird auf dem Server sofern eine Internet Verbindung steht und die Applikation offen ist, auch aktualisiert. Mit verschieben lässt sich der Ordner samt Unterodnern in einen anderen Ordner verlegen. Auflösen, löst den Ordner auf und verschiebt damit alle Unterordner in den Überordner. Karten und Unterordner bleiben folglich unversehrt. Löschen hingegen löscht alle Elemente und damit auch alle Unterordner und Karten.
+% ------------ Lernen von Karten ------------
+\subsection{Lernen von Karten}
+In jeder Ansicht wird dem Nutzer ein großer Grüner Button präsentiert. Bei drücken des Buttons, wird eine neue Ansicht geladen. In dieser Ansicht werden alle Karten präsentiert, welche in den Unterordnern vorhanden sind. Die Reihenfolge der Karten basiert dabei, auf dem vorher thematisierten Prinzip von \textit{spaced repetition}. Für jede Karte wird in der Datenbank eine Zahl gespeichert. Die niedrigsten Zahlen kommen zu erst, da das die Karten sind, welche vom dem Nutzer am schlechtesten gekonnt werden. Um die Frustration des Nutzers gering zu halten, werden zwischen die neuen, schweren Karten, manchmal leichtere, schon bekannte Karten gemischt.
+
+Das basiert auf dem Prinzip, dass die Motivation von Menschen am höchsten ist, wenn wir weder vor ein, für unseren Wissensstand, zu schweren oder leichten Problem stehen. löasjdfklas dflsajdfl a hier noch Quelle einfügen blyat.
+
+Sobald der Nutzer eine Karte eingesehen hat, stehen ihm zwei Möglichkeiten zur Verfügung. Wenn nach links gewischt wird, bedeutet das, dass der Nutzer die Karte nicht konnte und damit wird die Zahl der Karte wieder auf 0 reduziert. In dem Fall, dass die Karte nach rechts geschoben wird, wird dem System gesagt, dass der Nutzer die Karte auswendig konnte.
+
+Danach wägt das System die neue Zahl für die Karte an einem Score ab. Dieser setzt sich zusammen aus:
+
+\begin{description}
+\item[1.]
+Die Zeit die der Nutzer gebraucht hat um die Karten umzudrehen oder ob die Karte überhaupt umgedreht wurde. 
+\item[2.]
+Wie lange die Rückseite der Karte angeguckt wurde
+\item[3.]
+Die Länge des Inhalts der Vorderseite
+\item[4.]
+Die Länge des Inhalts der Rückseite
+\end{description}
+
+Anhand dieser Gesichtspunkt, ist das System in der Lage abzuwägen wie gute der Nutzer die Karte wirklich konnte. Folgende Bedingungen konzentrieren sich auf den Fall, dass der Nutzer nach rechts wischt. Wenn die Zeit, mit welcher der Nutzer sich die Vorderseite angeguckt hat, relativ zur Länge der Vorderseite kurz ist und die Rückseite nur kurz angeguckt wurde oder gar nicht, kann davon ausgegangen werden, dass der Nutzer die Karte gut beherrscht. Der ermittelte Wert ist damit sehr hoch. Der Nutzer beherrscht die Karte schlecht, wenn die Dauer der Vorderseite, wie oben geschildert, ebenfalls kurz ausfällt, aber die Rückseite dafür relativ Lange angeschaut wird. Es lässt sich vermuten, dass versehentlich nach rechts gewischt wurde oder ein Fehler unterlaufen ist, welcher aber ignoriert wurde. Im mittleren Fall, dauert die Vorderseite länger, aber die Rückseite ist vergleichsweise schnell. In dieser Möglichkeit, hat der Nutzer etwas länger braucht um auf die Lösung zu kommen, hatte sie aber richtig. Deswegen ist die Wertung mittel.
+
+% -------------- Statistiken ----------------
+\subsection{Statistiken}
+% ---- Hinzufügen von Karten und Ordnern ----
+\subsection{Hinzufügen von Karten und Ordnern}
+% ------------------ Kurse ------------------
+\subsection{Kurse}
+Mithilfe von Kursen soll die Schulkomponenten verwirklich werden. Ein Kurs funktioniert genauso, wie ein Kurs in der Schule. Ein Nutzer kann einen neuen Kurs erstellen. Über einen QR-Code oder Link kann dem Kurs beigetreten werden. Daraufhin wird dem Nutzer ein neuer Ordner angezeigt. Der Besitzer kann nun Ordner mit dem Kurs teilen. Die Ordner 
+% ------------ Teilen von Ordnern -----------
+\subsection{Online Ordner}
+Online Ordner erstellen 
+
+% -------------------------------------------
+% Entwurf des Backends
+% -------------------------------------------
+
+\section{Entwurf des Backends}
+
+% ------ Clientside ------
+\subsection{Clientside}
+
+% ------ Serverside ------
+\subsection{Serverside}
+Das Backend des Servers besteht aus der Programmiersprache Python und dem \textit{Relation Database Management System} MySQL. Python bildet die Logik des Servers und MySQL ist die SQL-Schnittstelle zur Datenbank. Wenn eine Abfrage an den Server gestellt wird, arbeiten die beiden zusammen, um eine \textit{Response} an den Nutzer zu schicken.
+
+% das hier ist alles out of mind geschrieben -> muss noch mit echten Daten gefüttert werden.
+Python ist eine von Guido van Rossum entwickelte high-level Programmiersprache, welche einen hohen Wert auf einfach Syntax legt. Python ist mittlerweile zu der meist genutzten Programmiersprache der Welt geworden. Am meisten wird sie für Scatch-Programming, Data-Analytics und AI-Programming genutzt. MySQL ist eine SQL-Programmiersprache, welche ähnlich wie die im Unterricht thematisierte Programmiersprache SQLite funktioniert. Der zentrale Unterschied der beiden ist, dass MySQL schneller ist und mehr Features hat. Dafür wird für SQLite kein Server gebraucht.
+
+
+
+Für den Server wurde auf den Anbieter Linode zurückgegriffen 
+Linode erklären
+Datenbank erklären
+
+Einleitung
+Bild von der Datenbank
+Datenbank erklären und Gedanken erläutern, wieso ich mich für diese Tabellen und Darstellungsmöglichkeiten entschieden habe.
+
+% ------ Datenaustausch ------
+\subsection{Datenaustausch}
+
+Informationen werden in Form von \textit{https-requests} an den Server geschickt. Über diese Weise sind die übermittelten Informationen Standardmäßig verschlüssel. Formatiert sind sind die Informationen in einem JSON String. Die Informationen werden aus dem übergebenen JSON String gefiltert und verarbeitet.
+
+Die Applikation wird über Änderungen informiert, indem der Server registriert, ob eine neue Version hochgeladen wird. Das Änderungsdatum wird mit in die Datenbank eingetragen. Die Applikation ruft vom Server alle Änderungen der verlinkten Boards ab, sobald diese aufgerufen wird. Die Response vom Server an die Applikation ist ein Datenpacket mit allen neu Hinzugefügten Elementen. Diese können als einfach Tabelle angefügt werden, da durch das vorher erstellte System, Änderungen einfach anzuwenden sind.
+
+%QT Hier einen typsichen Datenaustausch darstellen
+
+%QT Hier ein typisches Update eines Ordners darstellen
+
+% -------------------------------------------
+% Sicherheit
+% -------------------------------------------
+
+\section{Sicherheit}
+In Deutschland wird ein hohes Augenmerk auf die Sicherheit von Nutzerdaten gelegt. Wer in Deutschland eine Applikation mit Nutzerdatenverwaltung veröffentlich möchten, muss sich an die Datenschutz-Verordnung (DSGVO) halten. Diese bezieht sich auf Daten die automatisiert und nicht automatisiert verarbeitet werden. Die Grundsätze der DSGVO werden im Artikel 5 definiert.
+\begin{description}
+\item[1. Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz]
+Die Daten müssen auf rechtmäßige Weise und für betroffene Personen nachvollziehbar verarbeitet werden.
+\item[2. Zweckbindung]
+Daten dürfen nur für festgelegte, eindeutige und legitime Zwecke gespeichert werden.
+\item[3. Datenminimierung]
+Das Maß der gespeicherten Daten sollte sich auf die für den Zweck nötigen Daten beschränken
+\item[4. Richtigkeit]
+Daten müssen sachlich richtig und auf den neusten Stand sein. Fehler müssen sofort gelöscht oder behoben werden.
+\item[5. Speicherbegrenzung]
+Daten, mit welchen auf Personen zurück geschlossen werden kann, dürfen nur solange gespeichert werden, wie sie für den Zweck gebraucht werden.
+\item[6. Integrität und Vertraulichkeit]
+Es muss eine angemessene Sicherheit für das speichern der Daten herrschen. Das beinhaltet den Schutz vor unbefugter und unrechtmäßiger Verarbeitung.
+\end{description}
+
+\subsection{Salt und Secret Salt}
+Um sich bei dem Programm zu authentifizieren, wird von dem Nutzer eine Kombination aus Passwort und Nutzername genutzt. Diese beiden Informationen werden an den Server geschickt, welcher überprüft ob Nutzername und Passwort richtig angegeben worden sind. Das wird gemacht, indem Nutzername und Passwort mit den Einträgen in der Datenbank abgeglichen werden. Einher geht, dass wenn die Datenbank von Unbefugten kopiert wird, alle Nutzernamen mit ihren jeweiligen Passwörtern einsehbar sind. Damit können sich die Angreifer als andere Person ausgeben. Folglich, ist Speichern von Passwörtern in Klartext auf Servern grob fahrlässig.
+
+Um diesem Fall entgegen zu wirken werden Passwort in modernen Systemen verschlüsselt. Ein häufig verwendetes Verfahren ist der SHA-256 Algorithmus. Das in 2001 veröffentliche und von der \textit{National Security Agency} entwickelte Verschlüsselungsverfahren basiert auf dem \textit{Merkles Meta-Verfahren}. Eine mit diesem Verfahren verschlüsselte Zeichenkette ergibt jedes mal das gleiche Ergebnis und es fast unmöglich die Zeichenkette aus dem Verfahren rückzuschließen. Ein weiterer Vorteil, ist das kleine Abweichen einen großen Einfluss auf das Ergebnis haben, wie an folgenden Beispielen erkennbar.
+
+\textbf{QT BEISPIEL!} \break
+Zeichenfolge 1: password \break
+Zeichenfolge 2: passw0rd \break\par
+
+SHA-256 Output 1: \break 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 \break
+SHA-256 Output 2: \break 8f0e2f76e22b43e2855189877e7dc1e1e7d98c226c95db247cd1d547928334a9
+
+Zeichenfolge 1 und Zeichenfolge 2 unterscheiden sich in einem Zeichen. Das Resultat des Ergebnisses ähnelt sich jedoch nur in 3 Zeichen. Mithilfe der beiden SHA Ergebnissen, ist es nicht möglich einen Zusammenhang zwischen den Passwörtern zu erstellen.
+
+Dadurch, dass SHA-256 ein viel genutztes Verfahren ist, gibt es so genannte \textit{Rainbow Tables}. Das sind vorgefertigte Tabellen, welche häufig genutzte Passwörter in gehashter Form auflisten. Viele Internetnutzer benutzen leider simple Passwörter, weil diese leichter zu merken sind. Das Problem, je leichter das Passwort, desto wahrscheinlicher ist es, dass dieses in einem \textit{Rainbow Table} enthalten ist.
+% Den Prozess der Verschlüsselung noch genauer erklären
+% Erklären, dass das Passwort an den Server geschickt wird und dieser das dann hashed und dann erst abgleicht
+% Hier könnte ich noch mal auflisten wie die größten Rainbow Tables aussehen
+%Hier sollte ich noch ein paar Statistiken zu den häufigsten Passwörtern darstellen
+\textit{qwerty} gehört neben \textit{password} und \textit{123456} zu den häufigsten Passwörtern. Was sich wie ein Scherz anhört ist leider Realität. Dazu kommt noch, dass diese lachhaften Passwörter mit den selben Nutzernamen oder E-Mail auf jeder Seite wiederverwendet werden. Sollten Hacker an das Passwort des Nutzers kommen, dauert es meist nicht lange, bis sie die komplette Identität des Menschen klauen können. Dieser Aspekt ist ein gigantisches Sicherheitsproblem, weshalb \textit{password salts} erfunden wurden.
+% Hier noch ein paar mehr Hintergrundinformationen zu Salting einfügen
+
+Ein \textit{Salt} ist eine Zeichenfolge, welche an das Passwort gehangen wird. Wenn der Nutzer sein Passwort an den Server schickt, wird dieses mit dem \textit{Salt} gehashed und mit den Resultat in der Datenbank verglichen. Der Salt ist dabei für jeden Nutzer einzigartig. Das Problem ist, der Server muss wissen, was der Salt ist. Herkömmliche Methoden sind eine Kombination aus dem Nutzernamen oder einer zufällig generierten Zahlenfolge. Da in vielen System der Nutzername öffentlich zugänglich ist, bietet sich dieser nicht als Salt an. Eine bessere Methode ist die zufällige Wahl eines salts. Von dem \textit{National Institute of Standards and Technology}
+wird ein \textit{Salt} mit der Länge von 512 Bits empfohlen. Dieser \textit{Salt} wird dann neben dem Passwort in der Datenbank gespeichert. Der Hacker ist zwar in der Lage den \textit{Salt} zu lesen, aber \textit{salting} ist dennoch effektiv, da die \textit{Rainbow Tables} mit dem \textit{Salt} neu generiert werden müssen. Dadurch, dass SHA-Algorithmen sehr zeitintensiv sind und für eine große Menge an möglichen Passwörtern ausgeführt werden müssen, kann sehr viel Zeit gewonnen werden. Des Weiteren haben die Hacker, für den Fall, dass das Passwort in der \textit{Rainbow Table} erscheint, nur ein Passwort. Der Prozess muss für jedes Passwort aus der Datenbank wiederholt werden.
+
+Ergänzend zu dem \textit{Salt} gibt es den \textit{secret Salt} oder auch \textit{Pepper}. Wie der Name schon verrät, ist der nicht in der Datenbank enthalten. Der \textit{Pepper} wird meist extern in einem \textit{hardware security module} (HSM) gespeichert. Prinzipiell funktioniert der \textit{Pepper} genauso wie ein normaler \textit{Salt}. \textit{Pepper} wurde im Zuge der besonderen Lernleistung jedoch nicht implementiert.
+
+\subsection{Verschlüsseln von Nutzerdaten}
+
+% -------------------------------------------
+% Design - Entscheidungen
+% -------------------------------------------
+
+\section{Design-Entscheidungen}
+% Absatz auf Grundlage dieser Quelle https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Ausstattung-Gebrauchsgueter/Tabellen/liste-infotechnik-d.html;jsessionid=DD550FAF7C09C50227B95CDE6720900E.live742 noch einmal neu verfassen
+Da die abzudeckende Nutzerzahl möglichst hoch sein soll, bietet sich eine Applikation für mobile Endgeräte an. 88.8\% der deutschen Bevölkerung ab 14 Jahren besitzt ein Handy. Dadurch, dass die Applikation auf jüngere Nutzer fokussiert ist, kann sogar von einem größeren Prozentsatz gesprochen werden. Innerhalb der 14- bis 49-jährigen liegt der Anteil der Nutzer sogar bei über 95\%. Gegenüberstellend sind die Haushalte mit einem Computer. 2021 lag der Prozentsatz bei 91.9\% und schließt sich aus stationären Computern und mobilen Computern zusammen. Die Prozentsätze liegen zwar nah bei einander, sind aber anders zu gewichten. Während sich der Anteil an Smartphone Nutzern auf einzelne Personen bezieht, sind bei den Haushalten mit Computern auch Familien Computer zu berücksichtigen. Der Anteil der deutschen Haushalte mit einem stationären Computer beläuft sich auf 44\%. Dazu kommen noch 83,4\% Haushalte mit einem mobilen Computer, welche auch Tabletts inkludieren. Aus den Zahlen lässt vermuten, dass 10\% der Haushalte über einen geteilten Computer arbeiten, was jedoch nicht mit Zahlen belegbar ist. Ein geteilter Computer, bietet unter normalen Umständen kein gutes Lernumfeld. Ein weiterer Punkt ist die Verfügbarkeit. Während mithilfe des Handys unterwegs gelernt werden kann, muss bei einem Computer explizit Zeit genommen werden. Die Portabilität ist als entscheidender Punkt für die Entwicklung einer mobilen Anwendung zu nennen. Eine Webseite ist in Hinsicht auf Plattformverfügbarkeit das Optimum, muss sich einer Applikation jedoch geschlagen geben, da eine Internetverbindung gebraucht wird und das Unterwegs ein mögliches Hindernis sein kann. Dazu ist die Nutzererfahrung für mobile Nutzer deutlich schlechter im Gegensatz zu einer Applikation. Für Desktop Anwender ist eine Webseite in Zukunft in Erwägung zu ziehen, wird jedoch nicht weiter in dieser Ausarbeitung thematisiert. \cite{Statista:Smartphonenutzung}\cite{Statista:Computernutzung}\par
+Um möglichst verständlich zu sein, orientiert sich das User Interface der Applikation an den von Google typischen Designrichtlinien. Damit werden Assoziationen, die durch andere Applikation schon gefestigt worden sind, übernommen. Im Umkehrschluss können auch Assoziationen durch die Applikation gefestigt werden und das technische Verständnis gefördert werden.
