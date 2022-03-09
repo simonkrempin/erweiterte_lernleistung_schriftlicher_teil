@@ -1,0 +1,23 @@
+\chapter{Implementierung}
+\label{section:programmierung}
+In diesem Kapitel werden Probleme und Ideen diskutiert, welche mir im laufe der Implementation aufkamen.
+
+
+
+\section{Benutzeroberfläche}
+Mit dem Hauptgedanken der Klassenprogrammierung werden \textit{Widgets} in eigenen Dateien implementiert. Dabei wird die Klasse nur einmal definiert und kann, sofern gebraucht, wiederverwendet werden. Die Vorteile sind die Gleichen wie bei einer Methode. Änderungen müssen nur einmal angewandt werden und reimplementation gestaltet sich simple. In dem Fall der \textit{Widgets} ist die einzige Hürde, das \textit{Widget} so zu gestallten, dass es möglichst viele Anwendungsfälle findet.
+
+%Hier so Klassen hin wäre voll Toll.dioadawoifoaöewfaweejfoawjfe
+
+Die obere Klasse ist ein \textit{Widget} und die untere Klasse ist eine Ansicht. Informationen können an das \textit{Widget} mittels Parametern übergeben werden.
+
+Häufiger kommt es dazu, dass Informationen in den \textit{Widgets} aktualisiert werden müssen. Eine unschöne Möglichkeit ist die komplette Ansicht neu zu laden. Das ist schlecht, weil alle Aktionen neu ausgeführt werden müssen und das einige Zeit beanspruchen kann. Daher ist es besser nur das einzelne \textit{Widget} zu aktualisieren.
+
+\section{Interne Logik}
+:) ich weiß nicht was hier passiert
+
+\section{Backend}
+Hier so Backend :)
+
+\section{Datenaustausch}
+Hier ist Datenaustausch am passieren glaube ich :)
