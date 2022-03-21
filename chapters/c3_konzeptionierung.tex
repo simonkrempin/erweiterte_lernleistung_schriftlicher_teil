@@ -1,67 +1,103 @@
 \chapter{Konzeptionierung}
-
+In diesem Kapitel wird das Konzept für die Applikation aufgestellt, indem die Anforderungen definiert werden und die darauf basierenden Features der Anwendung diskutiert werden. Ergänzend werden die nötigen Backend- und Serverfunktionen erötert, um die Features zu verwirklichen.
 % -------------------------------------------
 % Anforderungen
 % -------------------------------------------
-
 \section{Anforderungen}
 \label{section:rahmenbedingungen}
-Im Folgenden werden die Rahmenbedingungen und Anforderung an die Applikation im Hinblick auf die tägliche Nutzung der primären Zielgruppe Schüler definiert. Wie schon in der Motivation erörtert, ist das Hauptziel der Anwendung, Schüler so gut wie möglich beim Lernprozess zu unterstützten. In Betrachtung dieses Punktes werden drei Anforderungen an die Applikation erkennbar.
+Im Folgenden werden die Rahmenbedingungen und Anforderung an die Applikation im Hinblick auf die tägliche Nutzung der primären Zielgruppe Schüler definiert. Wie schon in Kapitel \ref{einleitung} erörtert, ist das Hauptziel der Anwendung, Schüler so gut wie möglich beim Lernprozess zu unterstützten. In Betrachtung dieses Ziels werden drei Anforderungen an die Applikation erkennbar:
 \begin{description}
-\item[1. Die Applikation muss verständlich sein.]
-Dadurch, dass in der Schule viele unterschiedliche Kompetenzstufen zusammen kommen, muss eine solche Anwendung nicht nur fortgeschrittene Nutzer ansprechen, sondern jede Stufe abdecken. Während erfahrene Nutzer Prozesse aus dem Kontext mithilfe logischer Schlussfolgerung und übergreifenden Richtlinien ableiten können, fehlt diese Intuition den jüngeren. Somit ist es wichtig, die Applikation so einfach wie möglich zu gestalten. Das minimiert die Gefahr, dass kein Schüler durch technisches Ungeschick Nachteile erleidet. Unterstützt wird die benutzerfreundliche Oberlfäche durch eine detaillierte Anwendungshilfe.
-\item[2. Verfügbarkeit, unabhängig von den finanziellen Mitteln.]
-Ein offensichtlicher, \break dennoch oft vergessener Punkt ist, dass alle Schüler sich das Tool zunutze machen können sollen. Dabei ist die entscheidende Frage die Wahl der Plattform, da finanziell schwache Familien häfig weniger technische Hilfsmittel zur Verfügung stehen. Daraus ergibt sich die Herausforderung, auch diesen Kindern einen Zugriff auf optimale Lernmethoden und Umgebungen zu gewährleisten. Unter diesen Punkt fällt ebenfalls, dass die Applikation zu günstig wie möglich sein sollte, damit Bildung niemanden privilegiert.
-\item[3. Gleiche Informationsgrundlage für jeden Schüler.]
-Als Letztes ist eine gleiche Informationsgrundlage für einen gleichberechtigten Lernprozess von Nöten. Mithilfe von einer zentralen Sammlung des Lehrstoffs werden unterschiedliche Datenlagen ausgeschlossen. Eine solche Sammlung sollte durch Lehrkräfte verwaltet werden können. Damit können Unterrichtsmaterialien, Vokabellisten und weiterer Lernstoff einheitlich für Schüler bereitgestellt werden.
+\item[1. Verständlichkeit]
+Dadurch, dass in der Schule viele unterschiedliche Kompetenzstufen zusammen kommen, muss eine solche Anwendung nicht nur erfahrene Nutzer ansprechen, sondern intuitiv auch von weniger erfahrenen Benutzern bedienbar sein. Während Nutzer Prozesse aus dem Kontext mithilfe logischer Schlussfolgerung und übergreifenden Richtlinien ableiten können, fehlt diese Intuition den unerfahrenen. Somit ist es wichtig, die Applikation so einfach wie möglich zu gestalten. Das minimiert die Gefahr, dass kein Schüler durch technisches Ungeschick Nachteile erleidet. Unterstützt wird die benutzerfreundliche Oberfläche durch eine detaillierte Anwendungshilfe.
+\item[2. Verfügbarkeit]
+Ein offensichtlicher, dennoch oft vergessener Punkt ist, dass alle Schüler das Tool verwenden können sollen. Dabei ist die entscheidende Frage die Wahl der Plattform, da finanziell schwache Familien häufig weniger technische Hilfsmittel zur Verfügung stehen. Daraus ergibt sich die Herausforderung, auch diesen Kindern einen Zugriff auf optimale Lernmethoden und Umgebungen zu gewährleisten. Unter diesen Punkt fällt ebenfalls, dass die Applikation so günstig wie möglich sein sollte, damit auch finanziell schwache Anwender von den Vorteilen der Anwendung profitieren können.
+\item[3. Zentrale Lernstoffverwaltung]
+Als Letztes ist eine gleiche Informationsgrundlage für einen gleichberechtigten Lernprozess von Nöten. Mithilfe einer zentralen Sammlung des Lehrstoffs werden unterschiedliche Datenlagen ausgeschlossen. Eine solche Sammlung sollte durch Lehrkräfte verwaltet werden, um Unterrichtsmaterialien, Vokabellisten und weiteren Lernstoff einheitlich für Schüler bereitstellen zu können.
 \end{description}
-
-Die Anforderungen an eine Applikation, welche den Lernprozess unterstützt und damit Einfluss auf die Noten und das Verständnis der Schüler hat, sind hoch. Um diesen Anforderungen gerecht zu werden habe ich einige Tools genutzt, um das Programm möglichst detailreich zu planen, damit die Verbindungen und verschiedenen Elemente deutlich geplant sind und im Nachhinein keine Konflikte auftreten. In diesem Kapitel werde ich rudimentär auf die genutzten Tools eingehen und meine Entscheidungen bei der Planung erörtern.
 
 % -------------------------------------------
 % Funktionen
 % -------------------------------------------
 
 \section{Funktionen}
-In diesem Abschnitt werden die einzelnen Funktionen der Applikation erörtert. Dabei wird der Fokus auf Begründungen und Gedankengänge gelegt, welche im Abschnitt \ref{section:programmierung} implementiert werden. Die Funktionen der Applikation sind, unter besonderer Berücksichtigung der Rahmenbedingungen im Abschnitt \ref{section:rahmenbedingungen}, entstanden.\par
+In diesem Abschnitt werden die einzelnen Funktionen der Applikation erörtert. Dabei wird der Fokus auf Begründungen und Gedankengänge gelegt, welche im Kapitel \ref{section:programmierung} implementiert werden. Die Funktionen der Applikation sind unter besonderer Berücksichtigung der im Abschnitt \ref{section:rahmenbedingungen} aufgestellten Rahmenbedingungen entworfen worden.
 
 \subsection{Dateimanagement}
-Dadurch, dass die Applikation für viele unterschiedliche Themen genutzt werden soll, ist eine Struktur für das Management nötig. Dafür wurde für das herkömmliche speichern von Daten zurückgegriffen. Ein Ordner repräsentiert ein Thema oder einen Unterricht. Ein Ordner kann beliebig viele Unterordner haben. Wenn in einem Ordner Unterordner sind, können keine Karten in den Ordner gefügt werden. 
+Damit der Nutzer einen Überblick über alle Karteikarten behält, werden diese in einem System ähnlich einer Ordnerstruktur organisiert. Um eine passende Repräsentation zu wählen, wurde für die Speichermöglichkeiten ein typisches Beispiel für Schüler reproduziert. Die gespeicherten Karten lassen sich in erster Ordnung in verschiedene Fächer teilen. Karteikarten für Mathematik, Englisch und Deutsch sollten sichtlich voneinander unterscheidbar sein. Jedes Fach kann zudem noch in einzelne Themen unterteilt werden. Am Beispiel Mathematik könnten mögliche Themen Algebra und Analysis sein. Diese Themen lassen sich in weitere Unterthemen einteilen, wie Integralrechnung, Extremstellenberechnung und andere. 
 
-Jeder Ordner hat zugehörige Einstellungen, in welchen die Ordner umbenannt, veröffentlicht, verschoben, aufgelöst und gelöscht werden können. Veröffentlichen macht den Ordner zugänglich für jeden Nutzer der Anwendung, indem der Ordner auf den Server geladen wird. Dieser wird auf dem Server sofern eine Internet Verbindung steht und die Applikation offen ist, auch aktualisiert. Mit verschieben lässt sich der Ordner samt Unterodnern in einen anderen Ordner verlegen. Auflösen, löst den Ordner auf und verschiebt damit alle Unterordner in den Überordner. Karten und Unterordner bleiben folglich unversehrt. Löschen hingegen löscht alle Elemente und damit auch alle Unterordner und Karten.
+Folglich sollten die Ordner, welche die Themen repräsentieren, unbestimmt tief reichen. Dafür wurde grundlegend auf ein gleiches System wie jede herkömmliche Ordnerstruktur zurückgegriffen. Die Abbildung \ref{fig:appdatabase} zeigt, dass die Ordner der Anwendung in einer SQL-Datenbank gespeichert werden. Die Tabelle \texttt{folder} hat 7 Attribute, wobei 3 für das Speichern relevant sind. Der Index eines Eintrags ist ein eindeutiger Wert und ein Ordner kann damit bestimmt werden. Das Attribut \texttt{name} trägt eine lesbare Bezeichnung des Ordners, die vom Nutzer vergeben werden kann. Der Wert muss nicht eindeutig sein und kann beispielsweise Mathematik, Englisch, Algebra oder Analysis sein. Als Letztes bestimmt \texttt{root}, ob ein Ordner Unterordner hat, indem jeder Ordner speichert, welcher der übergeordnete Ordner ist. Durch diese Art der Konstruktion können durch eine einfach SQL-Abfrage mit Filter auf dem Feld \texttt{root} alle Unterordner für einen spezifischen Ordner gefunden werden. Da es sich hierbei um eine 1:n-Beziehung handelt, kann ein Ordner eine beliebige Zahl Unterordner enthalten.
+
+\begin{figure}[ht!]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{images/add_before.png}
+    \caption{Ordneransicht, bevor der \textit{FAB} zum Hinzufügen gedrückt wurde}
+    \label{add_before}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{images/add_after.png}
+    \caption{Ordneransicht, nachdem der \textit{FAB} zum Hinzufügen gedrückt wurde}
+  \end{minipage}
+\end{figure}
+
+Auf jeder Ansicht, außer der Suche und des Kartenlernen, ist es für den Nutzer möglich, Karten und Ordner zu erstellen. Dafür wird ein \textit{Floating Action Button} (\textit{FAB}) in der rechten unteren Ecke angezeigt. Wenn der \textit{FAB} gedrückt wird, dann wird um zwei weitere Optionen ergänzt. Mit den neuen Optionen lassen sich Ordner und Karten erstellen. Für einen Ordner muss ein Name angegeben werden. Optional sind Pfad und ob der Ordner öffentlich ist. Standardmäßig wird für den Pfad der Ordner ausgewählt, welcher ausgewählt war, als der Ordner erstellt wurde. Wenn ein Ordner in einem Ordner mit Karten erstellt wird, dann werden die Karten in einen Subordner \textit{Karten} umsortiert.
+
+Gegensätzlich Ordner löschen geht über die Einstellung der Ordner. Entweder kann auf einen Ordner lange gehalten werden oder in einem Ordner auf das Zahnrad, welches Einstellungen weitgreifend darstellt, geklickt werden, um die Einstellung zu öffnen. In den Einstellungen kann der Ordner nicht nur gelöscht werden, sondern auch der Name geändert, der Pfad geändert und der Ordner aufgelöst werden. Beim Ändern des Pfads wird die zuvor erläuterte \texttt{root} auf einen neuen Wert geändert. Während beim Löschen der komplette Inhalt des Ordners gelöscht wird, wird beim Auflösen eines Ordners der Inhalt auf den Überordner übertragen. 
+
+Beim Erstellen einer Karte, werden Vorderseite und Rückseite gefordert. Die Vorderseite ist der Wert, welcher während des Lernprozesses jeder Zeit angezeigt wird. Optional können wieder Pfad und Zugangsberechtigung definiert werden. Der Pfad wird durch der \texttt{root} Feld der Karte gespeichert. Über die Referenz zum Ordner, kann der Inhalt des Ordners mit einer SQL-Abfrage bestimmt und angezeigt werden. Dafür muss der \texttt{index} der Ordners in der \texttt{card} Tabelle gesucht werden und alle Treffer sind Karten.
+
+Für eine erweiterte Struktur können Karteikarten und Ordner nicht zusammen erscheinen. Das bedeutet, wenn ein Ordner Unterordner hat, kann dieser keine Karten mehr enthalten. Um das zu gewährleisten wird nicht nur das Hinzufügen blockiert, sondern auch das Äuflösen von einem Ordner mit Karteikarten. Die Idee dahinter ist es Thema und Inhalt sichtlich und verständlich zu trennen.
+
 % ------------ Lernen von Karten ------------
 \subsection{Lernen von Karten}
-In jeder Ansicht wird dem Nutzer ein großer Grüner Button präsentiert. Bei drücken des Buttons, wird eine neue Ansicht geladen. In dieser Ansicht werden alle Karten präsentiert, welche in den Unterordnern vorhanden sind. Die Reihenfolge der Karten basiert dabei, auf dem vorher thematisierten Prinzip von \textit{spaced repetition}. Für jede Karte wird in der Datenbank eine Zahl gespeichert. Die niedrigsten Zahlen kommen zu erst, da das die Karten sind, welche vom dem Nutzer am schlechtesten gekonnt werden. Um die Frustration des Nutzers gering zu halten, werden zwischen die neuen, schweren Karten, manchmal leichtere, schon bekannte Karten gemischt.
+In jeder Ansicht wird dem Nutzer ein großer, grüner \texttt{Button} präsentiert. Bei Drücken des \texttt{Buttons}, wird eine neue Ansicht geladen. In dieser Ansicht werden alle Karten präsentiert, welche in den Unterordnern vorhanden sind. Die Reihenfolge der Karten basiert dabei, auf dem vorher thematisierten Prinzip von \textit{Spaced Repetition}. Für jede Karte wird in der Datenbank eine Zahl gespeichert. Karten, die basierend auf der bisherigen Lernleistung als unsicher eingestuft werden, werden dem Nutzer als erstes zur Wiederholung angezeigt. Um die Frustration des Nutzers gering zu halten, werden zwischen die unsicheren Karten, manchmal leichtere, schon bekannte Karten gemischt. Das basiert auf dem Prinzip, dass die Motivation von Menschen am höchsten ist, wenn wir weder vor einem, für unseren Wissensstand, zu schweren oder leichtem Problem stehen \cite{AtomicHabits}.
 
-Das basiert auf dem Prinzip, dass die Motivation von Menschen am höchsten ist, wenn wir weder vor ein, für unseren Wissensstand, zu schweren oder leichten Problem stehen. löasjdfklas dflsajdfl a hier noch Quelle einfügen blyat.
-
-Sobald der Nutzer eine Karte eingesehen hat, stehen ihm zwei Möglichkeiten zur Verfügung. Wenn nach links gewischt wird, bedeutet das, dass der Nutzer die Karte nicht konnte und damit wird die Zahl der Karte wieder auf 0 reduziert. In dem Fall, dass die Karte nach rechts geschoben wird, wird dem System gesagt, dass der Nutzer die Karte auswendig konnte.
-
-Danach wägt das System die neue Zahl für die Karte an einem Score ab. Dieser setzt sich zusammen aus:
+Sobald der Nutzer eine Karte eingesehen hat, stehen ihm zwei Möglichkeiten zur Verfügung, um sein Verständnis zu überprüfen. Wenn nach links gewischt wird, bedeutet das, dass der Nutzer die Karte nicht konnte und damit wird die Zahl der Karte wieder auf 0 reduziert. In dem Fall, dass die Karte nach rechts geschoben wird, wird dem System gesagt, dass der Nutzer die Karte auswendig konnte. Danach wägt das System die neue Zahl für die Karte mit einem Algorithmus ab. Dieser setzt sich zusammen aus:
 
 \begin{description}
-\item[1.]
-Die Zeit die der Nutzer gebraucht hat um die Karten umzudrehen oder ob die Karte überhaupt umgedreht wurde. 
-\item[2.]
-Wie lange die Rückseite der Karte angeguckt wurde
-\item[3.]
-Die Länge des Inhalts der Vorderseite
-\item[4.]
-Die Länge des Inhalts der Rückseite
+\item[1. Betrachtungsdauer der Vorderseite]
+Eine kurze Zeit bedeutet, dass der Nutzer sofort wusste, was auf der Rückseite steht oder im gegensätzlichen Fall, direkt wusste, dass er es nicht weiß. Bei einer relativ langen Zeit kann davon ausgegangen werden, dass der Nutzer lange brauchte um sich die Erinnerung an die Rückseite ins Gedächtnis zu rufen.
+\item[2. Betrachtungsdauer der Lösung]
+Ein kurzes betrachten der Rückseite legt nahe, dass die Karte bekannt war. Die Karte war weitestgehend bekannt, wurde aber sicherheitshalber mehrmals gelesen oder ein kleiner Fehler ist unterlaufen, welcher für den Gesamtkontext von marginaler Auswirkung war, wenn die Rückseite länger angeschaut wird.
+\item[3. Die Länge des Inhalts der Vorderseite.]
+Die im ersten Punkt gemessene Zeit der Vorderseite muss in Relation zur Länge der Vorderseite gebracht werden. So lässt sich der Inhalt einer Kartenvorderseite schneller lesen und bearbeiten, wenn dieser nur aus einem einzigen Wort besteht. Enthält die Karte jedoch mehrere Sätze, so steigt die Bearbeitungszeit mindestens linear an.
+\item[4. Die Länge des Inhalts der Rückseite.]
+spielt nicht nur eine Rolle für den Punkt 2 basierend auf dem in Punkt 3 erklärten Prinzip, sondern ist auch wichtig für Punkt 1, da ein kurzer Inhalt schneller wiedergegeben werden kann als ein langer.
 \end{description}
 
-Anhand dieser Gesichtspunkt, ist das System in der Lage abzuwägen wie gute der Nutzer die Karte wirklich konnte. Folgende Bedingungen konzentrieren sich auf den Fall, dass der Nutzer nach rechts wischt. Wenn die Zeit, mit welcher der Nutzer sich die Vorderseite angeguckt hat, relativ zur Länge der Vorderseite kurz ist und die Rückseite nur kurz angeguckt wurde oder gar nicht, kann davon ausgegangen werden, dass der Nutzer die Karte gut beherrscht. Der ermittelte Wert ist damit sehr hoch. Der Nutzer beherrscht die Karte schlecht, wenn die Dauer der Vorderseite, wie oben geschildert, ebenfalls kurz ausfällt, aber die Rückseite dafür relativ Lange angeschaut wird. Es lässt sich vermuten, dass versehentlich nach rechts gewischt wurde oder ein Fehler unterlaufen ist, welcher aber ignoriert wurde. Im mittleren Fall, dauert die Vorderseite länger, aber die Rückseite ist vergleichsweise schnell. In dieser Möglichkeit, hat der Nutzer etwas länger braucht um auf die Lösung zu kommen, hatte sie aber richtig. Deswegen ist die Wertung mittel.
+Anhand dieser Gesichtspunkte ist das System in der Lage abzuwägen, wie gut der Nutzer die Karte konnte. Folgende Bedingungen konzentrieren sich auf den Fall, dass der Nutzer nach rechts wischt. Wenn die Zeit, mit welcher der Nutzer sich die Vorderseite angeguckt hat, relativ zur Länge der Vorderseite kurz ist und die Rückseite nur kurz angeguckt wurde oder gar nicht, kann davon ausgegangen werden, dass der Nutzer die Karte gut beherrscht. Der ermittelte Wert ist damit sehr hoch. Der Nutzer beherrscht die Karte schlecht, wenn die Dauer der Vorderseite, wie oben geschildert, ebenfalls kurz ausfällt, aber die Rückseite dafür relativ Lange angeschaut wird. Es lässt sich vermuten, dass versehentlich nach rechts gewischt wurde oder ein Fehler unterlaufen ist, welcher aber ignoriert wurde. Im mittleren Fall, dauert die Vorderseite länger, aber die Rückseite ist vergleichsweise schnell. In dieser Möglichkeit, hat der Nutzer etwas länger braucht um auf die Lösung zu kommen, hatte sie aber richtig. Deswegen ist die Wertung mittel.
 
 % -------------- Statistiken ----------------
 \subsection{Statistiken}
-% ---- Hinzufügen von Karten und Ordnern ----
-\subsection{Hinzufügen von Karten und Ordnern}
+Nach \cite{AtomicHabits} wirkt direkte Visualisierung des Fortschritts motivierend auf den Menschen. Dazu und um die Nutzererfahrung zu verbessern, indem eine optimale Lernzeit ermittelt wird, werden Statistiken angezeigt. Diese wurden mithilfe von Sessions verwirklicht. Beim Start eines Lernabschnitts wird eine Session gestartet. Für jede Session wird das Datum, die Start- und Endzeit, die Nummer des Ordners und die Anzahl an falschen und richtigen Karten gespeichert. Eine Session endet entweder damit, dass die Ansicht verlassen, die Applikation geschlossen wird oder länger als eine Minute im Hintergrund verweilt.
+
+Mit den gesammelten Daten werden in der Statistiken-Ansicht detailliertere Informationen über die Nutzungsgewohnheiten anschaulich aufbereitet. In Abbildung \ref{fig:statistics} wird die Ansicht der Statistik dargestellt. In der ersten Reihe werden alle Karten im Ordner und die komplette gelernte Zeit angezeigt. Darunter folgt eine umfangreiche Ansicht der gelernten, ungelernten und neuen Karten. Es lässt sich der Zeitraum auswählen, welcher ein Jahr, Monat, Woche oder Tag sein kann. Für den Zeitraum lassen sich detaillierte Informationen abrufen, indem mit dem Finger über den Graphen gegangen wird. Für die Stelle, an der der Finger ist, wird die genau Anzahl an jeweiligen Karten angezeigt. Nach dem Graphen folgen zwei Ansichten für die durchschnittliche Nutzeraktivität. In der ersten Ansicht wird der Zeitraum angezeigt, in welchem der Nutzer am meisten lernt. Die zweite Statistik zeigt die Zeiträume, in welchen der Nutzer am effektivsten ist. Ermittelt wird das, indem die Anzahl der richtigen und falschen Karten in Relation zueinander und der kompletten Anzahl an gelernten Karten errechnet wird und der daraus resultierende Durchschnitt wird in die Ansicht eingefügt. Der Wert wird für jede Uhrzeit ermittelt und ermöglicht so einen guten Überblick darüber, wann am effektivsten gelernt wurde. Abgeschlossen wird die Anzeige der Statistik mit einem zusammenfassenden Satz, welcher eine optimale Lernzeit aus den vorliegenden Daten ermittelt. Dafür werden Effektivität und Zeit zusammengeführt und der Zeitraum mit den höchsten Werten ermittelt. Bei der Zusammenführung wird die Effektivität mehr gewichtet. Im Optimalfall kann für die Nutzer eine passende Lernzeit ermittelt werden, welche einerseits in den Zeitplan der Nutzer passt und andererseits die Effektivität der Lernzeit möglichst hochhält.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/statistiken.png}
+    \caption{Detailliert Ansicht der Nutzeraktivität}
+    \label{fig:statistics}
+\end{figure}
+
+Darüber hinaus wird in jedem Ordner eine vereinfachte Ansicht für die gelernten, ungelernten und neuen Karten angezeigt, wie in Abbildung \ref{add_before} dargestellt. In dieser stehen keine detaillierten Informationen zur Verfügung und der Zeitraum ist ebenfalls auf den größtmöglichen festgelegt. Angezeigt wird die vereinfachte Ansicht, um als Knopf zur detaillierten Ansicht zu fungieren und den von \cite{AtomicHabits} erläuterten Effekt zu stärken, indem nicht in die detaillierte Ansicht gewechselt werden muss, um den Fortschritt anzusehen.
+
 % ------------------ Kurse ------------------
 \subsection{Kurse}
-Mithilfe von Kursen soll die Schulkomponenten verwirklich werden. Ein Kurs funktioniert genauso, wie ein Kurs in der Schule. Ein Nutzer kann einen neuen Kurs erstellen. Über einen QR-Code oder Link kann dem Kurs beigetreten werden. Daraufhin wird dem Nutzer ein neuer Ordner angezeigt. Der Besitzer kann nun Ordner mit dem Kurs teilen. Die Ordner 
+Mit dem Fokus auf eine schulähnliche Umgebung, dürfen Klassen bzw. Kurse nicht fehlen. Ein Kurs funktioniert in der Anwendung genauso wie in der Schule. Ein Nutzer kann einen Kurs erstellen und verwalten. Das bezieht sich auf die Mitglieder und die Inhalte, beide können nach Belieben wieder entfernt werden. Der große Vorteil an Kursen ist, dass mit ihnen Inhalte einfach geteilt werden können. In den Einstellungen kann das Teilen auch für Nutzer freigegeben werden, entweder mit oder ohne Überprüfung des Verwalters.
+
+Finden lässt sich der Inhalt der Gruppen in einem neuen Ordner namens \textit{Gruppen} auf der Startansicht. Jede Gruppe hat ihren eigenen Unterordner und die darin enthaltenen Inhalte sind die mit der Gruppe geteilten Ordner und Karteikarten. Persönliche Änderungen können, ohne jeglichen Effekt für die anderen Nutzer, vorgenommen werden. Die eigenen Änderungen werden durch zentrale Änderungen an den jeweiligen Karteikarten überschrieben.
+
+Um einen Kurs beizutreten, kann ein QR-Code innerhalb der Anwendung eingescannt werden. Der Scanner findet sich in der Suchleiste. Sobald der QR-Code eingescannt wurde, wird der Nutzer dem System mitgeteilt und dem Kurs hinzugefügt. Die Inhalte des Kurses werden dann auf das Gerät heruntergeladen.
+
+Anwendungsfälle für Kurse sind Zusammenfassungen der Unterrichtsstunden, die einzelnen Themen in Karteikarten zusammengefasst oder für Klausuren, noch einmal jedes Thema verständlich summiert. Mit diesen Ordnern kann für die Klausur gelernt werden. Über den Verlauf des Jahres sollten die Unterrichtsstunden wiederholt werden und zur Vorbereitung auf die Klausur wird auf die Ordner mit den Klausurthemen gewechselt. So kann über das Jahr der Inhalt gefestigt werden und die Themen der Klausurvorbereiten sollten so leichter fallen.
+
 % ------------ Teilen von Ordnern -----------
-\subsection{Online Ordner}
-Online Ordner erstellen 
+\subsection{Öffentliche Ordner}
+Online Ordner funktionieren ähnlich wie Kurse. Die beiden unterscheiden sich lediglich in der adressierten Zielgruppe. Kurse lassen sich nicht in der Suche finden, da diese privat gehalten und begleitend zum Unterricht geführt werden sollen. Die Online Ordner wiederum sind als Ordner von anderen für andere angesehen. So können bilinguale Nutzer einen Ordner erstellen, mit dem Interessierte Sprachen lernen können. Damit soll ermöglicht werden, dass Themen von Experten aufbereitet und der breiten Masse zum eigenständigen Lernen zur Verfügung gestellt werden.
+
+Verwirklicht wird das, indem die Ordner in ihren jeweiligen Einstellungen eine Option zum Veröffentlichen haben. Sobald diese aktiviert wird, sind die Daten für jeden zugänglich. Gefunden werden die Ordner mit der Suchleiste, über den Namen des Ordners. Die Ordner können bei Interesse heruntergeladen und bearbeitet werden. Dabei greift das gleiche Prinzip wie bei Gruppen. Änderungen sind nur temporär und sobald die Karteikarte mit den Änderungen aktualisiert wird, werden die alten Werte überschrieben. Das damit verbunden Potential für mögliche Weiterentwicklung in diesem Bereich wird im Fazit unter Abschnitt \ref{weiteresvorgehen} noch einmal aufgegriffen.
 
 % -------------------------------------------
 % Entwurf des Backends
@@ -71,10 +107,16 @@ Online Ordner erstellen
 
 % ------ Clientside ------
 \subsection{Clientside}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\textwidth]{images/app_datenbank.png}
+    \caption{Datenbank der Anwendung}
+    \label{fig:appdatabase}
+\end{figure}
 
 % ------ Serverside ------
 \subsection{Serverside}
-Das Backend des Servers besteht aus der Programmiersprache Python und dem \textit{Relation Database Management System} MySQL. Python bildet die Logik des Servers und MySQL ist die SQL-Schnittstelle zur Datenbank. Wenn eine Abfrage an den Server gestellt wird, arbeiten die beiden zusammen, um eine \textit{Response} an den Nutzer zu schicken.
+Das Backend des Servers besteht aus der Programmiersprache Python und dem \textit{Relation Database Management System} MySQL. Python bildet die Logik des Servers und MySQL ist die SQL-Schnittstelle zur Datenbank. Wenn eine Abfrage an den Server gestellt wird, arbeiten beiden zusammen, um eine \textit{Response} an den Nutzer zu schicken.
 
 % das hier ist alles out of mind geschrieben -> muss noch mit echten Daten gefüttert werden.
 Python ist eine von Guido van Rossum entwickelte high-level Programmiersprache, welche einen hohen Wert auf einfach Syntax legt. Python ist mittlerweile zu der meist genutzten Programmiersprache der Welt geworden. Am meisten wird sie für Scatch-Programming, Data-Analytics und AI-Programming genutzt. MySQL ist eine SQL-Programmiersprache, welche ähnlich wie die im Unterricht thematisierte Programmiersprache SQLite funktioniert. Der zentrale Unterschied der beiden ist, dass MySQL schneller ist und mehr Features hat. Dafür wird für SQLite kein Server gebraucht.
@@ -156,5 +198,10 @@ Ergänzend zu dem \textit{Salt} gibt es den \textit{secret Salt} oder auch \text
 
 \section{Design-Entscheidungen}
 % Absatz auf Grundlage dieser Quelle https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Ausstattung-Gebrauchsgueter/Tabellen/liste-infotechnik-d.html;jsessionid=DD550FAF7C09C50227B95CDE6720900E.live742 noch einmal neu verfassen
-Da die abzudeckende Nutzerzahl möglichst hoch sein soll, bietet sich eine Applikation für mobile Endgeräte an. 88.8\% der deutschen Bevölkerung ab 14 Jahren besitzt ein Handy. Dadurch, dass die Applikation auf jüngere Nutzer fokussiert ist, kann sogar von einem größeren Prozentsatz gesprochen werden. Innerhalb der 14- bis 49-jährigen liegt der Anteil der Nutzer sogar bei über 95\%. Gegenüberstellend sind die Haushalte mit einem Computer. 2021 lag der Prozentsatz bei 91.9\% und schließt sich aus stationären Computern und mobilen Computern zusammen. Die Prozentsätze liegen zwar nah bei einander, sind aber anders zu gewichten. Während sich der Anteil an Smartphone Nutzern auf einzelne Personen bezieht, sind bei den Haushalten mit Computern auch Familien Computer zu berücksichtigen. Der Anteil der deutschen Haushalte mit einem stationären Computer beläuft sich auf 44\%. Dazu kommen noch 83,4\% Haushalte mit einem mobilen Computer, welche auch Tabletts inkludieren. Aus den Zahlen lässt vermuten, dass 10\% der Haushalte über einen geteilten Computer arbeiten, was jedoch nicht mit Zahlen belegbar ist. Ein geteilter Computer, bietet unter normalen Umständen kein gutes Lernumfeld. Ein weiterer Punkt ist die Verfügbarkeit. Während mithilfe des Handys unterwegs gelernt werden kann, muss bei einem Computer explizit Zeit genommen werden. Die Portabilität ist als entscheidender Punkt für die Entwicklung einer mobilen Anwendung zu nennen. Eine Webseite ist in Hinsicht auf Plattformverfügbarkeit das Optimum, muss sich einer Applikation jedoch geschlagen geben, da eine Internetverbindung gebraucht wird und das Unterwegs ein mögliches Hindernis sein kann. Dazu ist die Nutzererfahrung für mobile Nutzer deutlich schlechter im Gegensatz zu einer Applikation. Für Desktop Anwender ist eine Webseite in Zukunft in Erwägung zu ziehen, wird jedoch nicht weiter in dieser Ausarbeitung thematisiert. \cite{Statista:Smartphonenutzung}\cite{Statista:Computernutzung}\par
-Um möglichst verständlich zu sein, orientiert sich das User Interface der Applikation an den von Google typischen Designrichtlinien. Damit werden Assoziationen, die durch andere Applikation schon gefestigt worden sind, übernommen. Im Umkehrschluss können auch Assoziationen durch die Applikation gefestigt werden und das technische Verständnis gefördert werden.
+Da die abzudeckende Nutzerzahl möglichst hoch sein soll, bietet sich eine Applikation für mobile Endgeräte an. 88,8\% der deutschen Bevölkerung ab 14 Jahren besitzt laut \cite{Statista:Smartphonenutzung} ein Handy. Dadurch, dass die Applikation auf jüngere Nutzer fokussiert ist, kann sogar von einem größeren Prozentsatz gesprochen werden. Innerhalb der 14- bis 49-jährigen liegt der Anteil der Nutzer sogar bei über 95\%. Gegenüberstellend sind die Haushalte mit einem Computer. 2021 lag der Prozentsatz bei 91,9\% und schließt sich aus stationären Computern und mobilen Computern zusammen \cite{Statista:Computernutzung}. Die Prozentsätze liegen zwar nah bei einander, sind aber anders zu gewichten. Während sich der Anteil an Smartphone Nutzern auf einzelne Personen bezieht, sind bei den Haushalten mit Computern auch Familien Computer zu berücksichtigen. Der Anteil der deutschen Haushalte mit einem stationären Computer beläuft sich auf 44\%. Dazu kommen noch 83,4\% Haushalte mit einem mobilen Computer, welche auch Tabletts inkludieren \cite{Statista:Computernutzung}. Aus den Zahlen lässt vermuten, dass 8,5\% der Haushalte über einen geteilten Computer arbeiten, was jedoch nicht mit Zahlen belegbar ist. Ein geteilter Computer, bietet unter normalen Umständen kein gutes Lernumfeld. Ein weiterer Punkt ist die Verfügbarkeit. Während mithilfe des Handys unterwegs gelernt werden kann, muss bei einem Computer explizit Zeit genommen werden. Die Portabilität ist als entscheidender Punkt für die Entwicklung einer mobilen Anwendung zu nennen. Eine Webseite ist in Hinsicht auf Plattformverfügbarkeit das Optimum, muss sich einer Applikation jedoch geschlagen geben, da eine Internetverbindung gebraucht wird und das Unterwegs ein mögliches Hindernis sein kann. Dazu ist die Nutzererfahrung für mobile Nutzer deutlich schlechter im Gegensatz zu einer Applikation. Für Desktop Anwender ist eine Webseite in Zukunft in Erwägung zu ziehen, wird jedoch nicht weiter in dieser Ausarbeitung thematisiert.
+
+Um möglichst verständlich zu sein, orientiert sich das User Interface der Applikation an den von Google typischen Designrichtlinien. Damit werden Assoziationen, die durch andere Applikation schon gefestigt worden sind, übernommen. Im Umkehrschluss können auch Assoziationen durch die Applikation geknüpft werden und das technische Verständnis gefördert werden.
+
+Die visuellen Elemente wurden möglichst eindeutig und einfach gestaltet, genauso wie über die komplette Anwendung einheitlich gehalten. Das sorgt nicht nur für rundum ein schöneres Bild, sondern macht die Nutzung einfacher. Durch einheitliche Darstellung, haben Aktionen immer eine erwartete Reaktion, welche sich nicht von der wirklichen Reaktion unterscheidet. Das unterstützt den Prozess des Knüpfen von Assoziationen.
+
+Die Farb- und Formwahl der Elemente hat den Fokus auf leichtes Design. Es wurden zu aggressive Farbkombinationen vermieden, um Lesen von Inhalten angenehm zu gestalten. Dazu sind die genutzten Farben klar von einander zu entscheiden, was Nutzern mit eingeschränkter Sehleistung zu gute kommt.
