@@ -1,20 +1,82 @@
 \chapter{Implementierung}
 \label{section:programmierung}
-In diesem Kapitel werden Probleme und Ideen diskutiert, welche mir im laufe der Implementation aufkamen.
-
-
-
 \section{Benutzeroberfläche}
-Mit dem Hauptgedanken der Klassenprogrammierung werden \textit{Widgets} in eigenen Dateien implementiert. Dabei wird die Klasse nur einmal definiert und kann, sofern gebraucht, wiederverwendet werden. Die Vorteile sind die Gleichen wie bei einer Methode. Änderungen müssen nur einmal angewandt werden und reimplementation gestaltet sich simple. In dem Fall der \textit{Widgets} ist die einzige Hürde, das \textit{Widget} so zu gestallten, dass es möglichst viele Anwendungsfälle findet.
+Mit dem Hauptgedanken der objektorientierten Programmierung werden \textit{Widgets} in eigenen Dateien implementiert. Dabei wird die Klasse nur einmal definiert und kann, sofern gebraucht, wiederverwendet werden. Die Vorteile sind die Gleichen wie bei einer Methode. Änderungen müssen nur einmal angewandt werden und reimplementation gestaltet sich simple. In dem Fall der \textit{Widgets} ist die einzige Hürde, das \textit{Widget} so zu gestallten, dass es möglichst viele Anwendungsfälle findet.
 
-%Hier so Klassen hin wäre voll Toll.dioadawoifoaöewfaweejfoawjfe
+Das Prinzip wird an dem Beispiel eines \texttt{Buttons}-\textit{Widgets} veranschaulicht. Das \textit{Widget} wird in der Klasse \ref{button:code}
+implementiert. In \ref{ansicht:code} wird die Ansicht, welche den \texttt{Button} implementiert, dargestellt. In den Zeilen 63 bis 95 wird eine \texttt{Column} mit allen Einstellungselementen initialisiert. Als letztes wird der \texttt{Button} zum speichern hinzugefügt. In diesen werden den erforderlichen namentlichen Parameter Werte zugewiesen. 
 
-Die obere Klasse ist ein \textit{Widget} und die untere Klasse ist eine Ansicht. Informationen können an das \textit{Widget} mittels Parametern übergeben werden.
+Die Werte werden dann in der Klasse verarbeitet. Wäre der Code nicht in eine externe Klasse ausgelagert, dann müssten Großteile mit in der Klassen \ref{ansicht:code} enthalten sein und das würde die Klasse deutlich größer und unübersichtlicher machen. 
 
-Häufiger kommt es dazu, dass Informationen in den \textit{Widgets} aktualisiert werden müssen. Eine unschöne Möglichkeit ist die komplette Ansicht neu zu laden. Das ist schlecht, weil alle Aktionen neu ausgeführt werden müssen und das einige Zeit beanspruchen kann. Daher ist es besser nur das einzelne \textit{Widget} zu aktualisieren.
+Häufiger kommt es dazu, dass Informationen in den \textit{Widgets} aktualisiert werden müssen. Eine unschöne Möglichkeit ist die komplette Ansicht neu zu laden. Das ist schlecht, weil alles neu gerendert bzw. gemalt werden muss und es so zu einem Flickern kommt. Dazu
 
 \section{Interne Logik}
-:) ich weiß nicht was hier passiert
+Die Klasse \texttt{AppDatabase} implementiert die Verbindung zur Datenbank der Applikation. Dafür wird eine Referenz auf die Verbindung zur lokalen Datenbank gespeichert und bei Bedarf von der Methode \texttt{get} zurückgegeben. Sollte noch keine Verbindung zur Datenbank bestehen, da diese zuvor noch nicht benötigt worden ist, dann wird diese durch die Methode \texttt{\_initDatabase} vor dem Zurückgeben der Verbindung initialisiert und für spätere Anfragen gespeichert.
+
+In der Methode \texttt{\_initDatabase}, wird in dem Speicherpfad überprüft, ob eine Datenbank vorliegt. Ist dies der Fall, führt die Methode \texttt{openDatabase} aus und knüpft damit eine Verbindung, ohne auf \texttt{onCreate} zurückzugreifen. Falls keine Datenbank vorliegt, wird mit der Methode \texttt{\_createDatabase} im \texttt{onCreate} Parameter eine neue Datenbank erstellt.
+
+\texttt{\_createDatabase} führt alle SQL-Anfragen zum Erstellen des in Abbildung \ref{fig:appdatabase} dargestellten Datenbankschemas aus. Listing \ref{lst:_createDatabase} zeigt beispielhaft die für die Erstellung der card Tabelle notwendige SQL-Abfrage, die durch besondere Schlüsselwörter ergänzt wurde. Unteranderem wurde \texttt{CREATE TABLE} um \texttt{IF NOT EXISTS} ergänzt, um Fehler zu verhindern, die auftreten würden, wenn die Tabelle erstellt wird, obwohl es schon eine Tabelle \texttt{card} gibt. Die gespeicherten Karten lassen sich an ihrer eindeutigen \texttt{\_id} erkennen. IN SQL werden solche Werte als \texttt{PRIMARY KEY} gekennzeichnet, um das vorkommen von doppelten Werten zu verhindern. Damit der Primärschlüssel sich abhebt, wird vor den Wert ein Unterstricht gesetzt. Da \texttt{\_id} keinen Nutzen hat, außer die Karten auseinanderhalten zu können, wird mit dem Schlüsselwort \texttt{AUTOINCREMENT} ein Wert zugeweisen, welcher mit jedem Eintrag erhöht wird, womit verhindert wird, dass doppelte Werte auftreten.
+
+Mit \texttt{execute} können SQL-Anfragen, im \texttt{String}-Formt, ausgeführt werden. Um die Lesbarkeit zu erhöhen, werden die Anfragen vorher in einem \texttt{String} definiert. Damit ist deutlich, was die einzelnen SQL-Anfragen machen und vereinfacht das Debugging und Erweitern der Anfragen.
+
+\begin{lstlisting}[caption={Erstellen der Datenbank},language=sql,captionpos=b,label={lst:_createDatabase},numbers=left,frame=none,escapechar=|]
+CREATE TABLE IF NOT EXISTS card(
+    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    root INTEGER,
+    front TEXT,
+    back TEXT,
+    status INTEGER,
+    public BOOLEAN
+\end{lstlisting}
+
+Zur Abstraktion bietet die \texttt{AppDatabase} darüber hinaus verschiedene Wrapper-Methoden an, welche spezifische SQL-Abfragen kapseln und somit zu einer erhöhten Lesbarkeit außerhalb der \texttt{AppDatabase}-Klasse beitragen. Darüber hinaus ergibt sich der Vorteil, dass alle SQL-Abfragen in der \texttt{AppDatabase}-Klasse gebündelt werden können. Ein Ausschnitt einer solchen Methode wird in Listing \ref{lst:methode_karten_wiedergeben} dargestellt. Beim Aufruf der Methode wird zunächst die Instanz der Datenbank nach dem vorherigen Prinzip erhalten. Auf die Datenbank wird eine Abfrage, welche alle Karten nach einer spezifischen Reihenfolge oder nach dem Erstellungsdatum eines Ordners sortiert, ausgeführt und das Ergebnis wird gespeichert. Schlussendlich wird das Ergebnis von einer Tabelle in eine Liste von Karten (\texttt{Card}) formatiert und zurückgegeben. Anzumerken ist, dass durch das Fragezeichen in Zeile \ref{zeile:fragezeichen}, wofür die Werte von \texttt{whereArgs:} eingefügt werden, \textit{SQL-Injections} verhindert werden. Ohne das verhindern von \textit{SQL-Injections} ist eine Datenbank leicht angreifbar, da zusätzliche SQL-Befehle in die eigentliche Anfrage injiziert werden können und so die Logik verändert wird. Dafür muss in ein Eingabefeld der Anwendung SQL Syntax geschrieben werden. Beim durchlaufen, wird die vom Nutzer gestellte SQL-Anfrage als eigene, valide Anfrage gesehen und ausgeführt. Die damit erreichbaren Schäden gehen von Daten löschen bis zum Einsehen von allen Daten auf der Datenbank. Durch \textit{Escaping} werden \textit{SQL-Injections} verhindert und da jede Anwendung vor dem gleichen Problem steht, vereinfacht Dart mit \texttt{whereArgs} die Arbeit, denn das herkömmliche aneinanderreihen von Zeichenfolgen mit \texttt{concat} verhindert das nicht.
+
+\begin{lstlisting}[caption={Methode, welche alle Karten eines Ordners wiedergibt},captionpos=b,label={lst:methode_karten_wiedergeben},numbers=left,frame=none,escapechar=|]
+Future<List<Card>> readCards(int folderId, String? sortingOrder) async {
+  final db = await instance.database;
+
+  final res = await db.query(
+    'card',
+    where: 'root = ?', |\label{zeile:fragezeichen}|
+    whereArgs: [folderId],
+    orderBy: sortingOrder ?? '_id ASC',
+  );
+  return res.isNotEmpty ? res.map((e) => Card.fromMap(e)).toList() : [];
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Anfrage aus Listing \ref{lst:methode_karten_wiedergeben} als herkömmliche SQL-Anfrage},language=sql,captionpos=b,label={lst:sql_anfrage},numbers=left,frame=none,escapechar=|]
+SELECT *
+FROM card
+WHERE root = folderId
+ORDER BY CASE 
+    WHEN sortingOrder is NULL THEN _id ASC 
+    ELSE sortingOrder
+END
+\end{lstlisting}
+
+Sofern möglich sollte auf die vorgefertigte Methode zurückgegriffen werden, da diese Performance optimiert und vor \textit{SQL-Injections} geschützt ist. Dazu kommt noch, dass die \texttt{query}-Methode in einer Vielzahl an Anwendungsfällen leichter zu lesen ist, besonders für Programmierer ohne SQL-Kenntnisse, wie an dem Beispiel \ref{lst:methode_karten_wiedergeben} erkennbar.
+
+Die Methode in Listing \ref{lst:sql_anfrage} kann innerhalb des Programms aufgerufen werden. Dazu muss \texttt{AppDatabase} importiert werden und darauf kann die static Variable \texttt{instance} aufgerufen werden. Da \texttt{instance} eine Referenz auf die Klasse \texttt{AppDatabase} hat, kann der Aufruf um einen Methodenaufruf erweitertet werden. Die erhaltenen Daten können dann im UI angezeigt werden. Da das Erhalten der Daten jedoch dauert, muss im UI zwischen zwei Zuständen unterschieden werden. Im ersten Zustand wird ein Ladebalken angezeigt, welcher dem Nutzer vermittelt, dass die Anwendung im Hintergrund Daten überträgt und verarbeitet. Sobald die Daten geladen wurden, wird \texttt{\_contentLoading} auf \texttt{false} gesetzt und die Benutzeroberfläche aktualisiert. 
+
+In Listing \ref{lst:deleting} wird eine Methode dargestellt, welche einen Ordner mit samt seiner Unterordner zu löschen. Dafür wird eine Liste an zu löschenden Ordnern erstellt, die zunächst nur den vom Benutzer ausgewählten Ordner enthält. Für jeden Ordner in der Liste werden alle Unterordner von der Datenbank gelesen und in die Liste eingefügt. Danach wird der Ordner und alle dazugehörigen Karten gelöscht.
+
+\begin{lstlisting}[caption={Methode zum löschen eines Ordners samt Inhalt und Unterordner},captionpos=b,label={lst:deleting},numbers=left,frame=none,escapechar=|]
+Future<void> deleteFolder(int folderId) async {
+  final db = await instance.database;
+  final elementsToDelete = [folderId];
+
+  while (elementsToDelete.isNotEmpty) {
+    final id = elementsToDelete.removeLast();
+    final subfolders = await getSubfolders(id, null);
+    for (final subfolder in subfolders) {
+      elementsToDelete.add(subfolder.id!);
+    }
+    await db.delete('folder', where: '_id = ?', whereArgs: [id]);
+    await db.delete('card', where: 'root = ?', whereArgs: [id]);
+  }
+}
+\end{lstlisting}
 
 \section{Backend}
 Hier so Backend :)
