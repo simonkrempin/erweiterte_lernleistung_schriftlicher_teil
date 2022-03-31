@@ -1,16 +1,26 @@
 \chapter{Implementierung}
-\label{section:programmierung}
+\label{chapter:programmierung}
+In diesem Kapitel werden die Implementierungsdetails der Applikation diskutiert. Das fundamentale Prinzip der Benutzeroberfläche wird in Abschnitt \ref{section:benutzeroberfläche} erörtert. Danach folgt in Abschnitt \ref{section:interne_logik} die Umsetzung der Datenbank und Nutzungsweise der Applikation. Des Weiteren wird über die Implementierung des Servers in Abschnitt \ref{section:datenaustausch} gesprochen. Schlussendlich wird der Datenaustausch zwischen der Applikation und dem Server in Abschnitt \ref{section:datenaustausch} thematisiert, wo auf Logik des Server und der Anwendung eingegangen wird.
+
 \section{Benutzeroberfläche}
-Mit dem Hauptgedanken der objektorientierten Programmierung werden \textit{Widgets} in eigenen Dateien implementiert. Dabei wird die Klasse nur einmal definiert und kann, sofern gebraucht, wiederverwendet werden. Die Vorteile sind die Gleichen wie bei einer Methode. Änderungen müssen nur einmal angewandt werden und reimplementation gestaltet sich simple. In dem Fall der \textit{Widgets} ist die einzige Hürde, das \textit{Widget} so zu gestallten, dass es möglichst viele Anwendungsfälle findet.
+\label{section:benutzeroberfläche}
+Mit dem Prinzip der objektorientierten Programmierung werden Widgets in eigenen Dateien implementiert. Die dadurch entstehenden Vorteile sind die gleichen wie bei Methoden, denn gerade Elemente der Benutzeroberfläche haben viele repetitive Stellen und die wenigen Unterschiede können durch Parameter abgeändert werden. Damit lassen sich Änderungen leichter anwenden und der Code ist besser lesbar. Die einzige Hürde ist, die Widgets für so viele Anwendungsfälle wie möglich verwendbar zu machen.
 
-Das Prinzip wird an dem Beispiel eines \texttt{Buttons}-\textit{Widgets} veranschaulicht. Das \textit{Widget} wird in der Klasse \ref{button:code}
-implementiert. In \ref{ansicht:code} wird die Ansicht, welche den \texttt{Button} implementiert, dargestellt. In den Zeilen 63 bis 95 wird eine \texttt{Column} mit allen Einstellungselementen initialisiert. Als letztes wird der \texttt{Button} zum speichern hinzugefügt. In diesen werden den erforderlichen namentlichen Parameter Werte zugewiesen. 
+Das Prinzip wird an der \texttt{BasicButton}-Klasse veranschaulicht, welche einen grünen Button mit einem weißen Text erstellt. Implementiert wird dieser Button beispielsweise in der Klasse \texttt{FolderSettingsView}, in welcher die Einstellung der Ordner geändert werden können. Nachdem die UI-Elemente für die Einstellungen erstellt werden, folgt am Ende der Ansicht der Button zum Speichern der Einstellungen. In den Button werden über die drei Parameter die nötigen Werte übertragen, von welchen zwei verpflichtend sind und lediglich einer optional ist. Es ist ein Parameter optional, weil der Text und Funktion des Buttons jedes Mal unterschiedlich sind und deswegen nicht optional sein kann. Der optionale Parameter mit einem Standardwert erweist sich als sinnvoll, da er bestimmt, ob der Button gedrückt werden kann, was in den meisten Szenarien der Fall ist. Mit den Parametern modifiziert, erstellt die Klasse \texttt{BasicButton} den Button für den Anwendungsfall. Beim Drücken des Buttons wird so die vorher mitgegebene Funktion ausgeführt und auch der Text des Buttons ist gleich mit dem vom Parameter definierten Wert.
 
-Die Werte werden dann in der Klasse verarbeitet. Wäre der Code nicht in eine externe Klasse ausgelagert, dann müssten Großteile mit in der Klassen \ref{ansicht:code} enthalten sein und das würde die Klasse deutlich größer und unübersichtlicher machen. 
+Ein weiterer Vorteil wird beim Aktualisieren von Informationen ersichtlich, denn dabei werden nicht nur die Bereiche mit den Informationen aktualisiert, sondern das ganze Widget. Ohne Auskapselung der UI-Elemente muss bei einer Struktur wie in Abbildung \ref{fig:flutter_structure} das komplette \textit{root}-Widget neu gerendert werden und Rechenleistung für Widgets ohne Änderungen aufgewandt werden. Durch das Auskapseln werden die Widgets in ihren eigenen \texttt{build}-Methoden implementiert und können explizit aufgerufen werden, ohne jedes Element der Benutzeroberfläche neu zu rendern.
 
-Häufiger kommt es dazu, dass Informationen in den \textit{Widgets} aktualisiert werden müssen. Eine unschöne Möglichkeit ist die komplette Ansicht neu zu laden. Das ist schlecht, weil alles neu gerendert bzw. gemalt werden muss und es so zu einem Flickern kommt. Dazu
+\begin{center}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{images/layerstruktur_flutter.png}
+        \caption{Überblick über die Flutter \textit{Widget}-Struktur}
+        \label{fig:flutter_structure}
+    \end{figure}
+\end{center}
 
 \section{Interne Logik}
+\label{section:interne_logik}
 Die Klasse \texttt{AppDatabase} implementiert die Verbindung zur Datenbank der Applikation. Dafür wird eine Referenz auf die Verbindung zur lokalen Datenbank gespeichert und bei Bedarf von der Methode \texttt{get} zurückgegeben. Sollte noch keine Verbindung zur Datenbank bestehen, da diese zuvor noch nicht benötigt worden ist, dann wird diese durch die Methode \texttt{\_initDatabase} vor dem Zurückgeben der Verbindung initialisiert und für spätere Anfragen gespeichert.
 
 In der Methode \texttt{\_initDatabase}, wird in dem Speicherpfad überprüft, ob eine Datenbank vorliegt. Ist dies der Fall, führt die Methode \texttt{openDatabase} aus und knüpft damit eine Verbindung, ohne auf \texttt{onCreate} zurückzugreifen. Falls keine Datenbank vorliegt, wird mit der Methode \texttt{\_createDatabase} im \texttt{onCreate} Parameter eine neue Datenbank erstellt.
@@ -61,25 +71,27 @@ Die Methode in Listing \ref{lst:sql_anfrage} kann innerhalb des Programms aufger
 
 In Listing \ref{lst:deleting} wird eine Methode dargestellt, welche einen Ordner mit samt seiner Unterordner zu löschen. Dafür wird eine Liste an zu löschenden Ordnern erstellt, die zunächst nur den vom Benutzer ausgewählten Ordner enthält. Für jeden Ordner in der Liste werden alle Unterordner von der Datenbank gelesen und in die Liste eingefügt. Danach wird der Ordner und alle dazugehörigen Karten gelöscht.
 
-\begin{lstlisting}[caption={Methode zum löschen eines Ordners samt Inhalt und Unterordner},captionpos=b,label={lst:deleting},numbers=left,frame=none,escapechar=|]
-Future<void> deleteFolder(int folderId) async {
-  final db = await instance.database;
-  final elementsToDelete = [folderId];
-
-  while (elementsToDelete.isNotEmpty) {
-    final id = elementsToDelete.removeLast();
-    final subfolders = await getSubfolders(id, null);
-    for (final subfolder in subfolders) {
-      elementsToDelete.add(subfolder.id!);
-    }
-    await db.delete('folder', where: '_id = ?', whereArgs: [id]);
-    await db.delete('card', where: 'root = ?', whereArgs: [id]);
-  }
-}
-\end{lstlisting}
+\begin{algorithm}
+	\caption{Algorithmus zum löschen von Ordnern samt Unterorder} 
+	\begin{algorithmic}[1]
+	    \State $db \leftarrow database$ $instance$
+	    \State $elementsToDelete \leftarrow folderID$
+		\While{$elementsToDelete\neq\emptyset$}
+		    \State $currentId\leftarrow element \in$ $elementsToDelete$ and remove it
+		    \State $subfolders\leftarrow$ all folders with $id=currentId$ from $db$
+		    \For{$subfolder$ in $subfolders$}
+		        \State add $subfolder$ to $elementsToDelete$
+		    \EndFor
+		    \State delete folder where $id=currentId$ from $db$
+		    \State delete cards where $root=currentId$ from $db$
+		\EndWhile
+	\end{algorithmic} 
+\end{algorithm}
 
 \section{Backend}
+\label{section:backend}
 Hier so Backend :)
 
 \section{Datenaustausch}
+\label{section:datenaustausch}
 Hier ist Datenaustausch am passieren glaube ich :)
