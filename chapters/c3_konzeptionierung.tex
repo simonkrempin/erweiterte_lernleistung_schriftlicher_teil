@@ -1,5 +1,6 @@
 \chapter{Konzeptionierung}
-In diesem Kapitel wird das Konzept für die Applikation aufgestellt, indem die Anforderungen definiert werden und die darauf basierenden Features der Anwendung diskutiert werden. Ergänzend werden die nötigen Backend- und Serverfunktionen erötert, um die Features zu verwirklichen.
+In diesem Kapitel wird das Konzept für die Applikation aufgestellt, welches während der Entwicklung umgesetzt wurde. Dazu werden die Anforderungen an die Anwendung, um eine umfangreiche Nutzererfahrung zu ermöglichen, in Abschnitt \ref{section:rahmenbedingungen} definiert. Die zum erfüllen der Anforderung nötigen Funktionen werden in Abschnitt \ref{section:funktionen} erörtert. In Abschnitt \ref{section:entwurf_backend} wird das für die Funktionen gebrauchte App- und Serverbackend behandelt. Ergänzend zu den Backend-Funktionen des Servers, wird der Aspekt der Sicherheit im Abschnitt \ref{section:sicherheit} besprochen, da Nutzerdaten und -informationen auf dem Server gespeichert werden und diese ausreichend gesichert werden müssen. Das Kapitel wird durch eine Diskussion, der für eine übersichtliche Darstellung der Funktionen nötigen Designrichtlinien, in Abschnitt \ref{section:design} abgerundet.
+
 % -------------------------------------------
 % Anforderungen
 % -------------------------------------------
@@ -8,9 +9,9 @@ In diesem Kapitel wird das Konzept für die Applikation aufgestellt, indem die A
 Im Folgenden werden die Rahmenbedingungen und Anforderung an die Applikation im Hinblick auf die tägliche Nutzung der primären Zielgruppe Schüler definiert. Wie schon in Kapitel \ref{einleitung} erörtert, ist das Hauptziel der Anwendung, Schüler so gut wie möglich beim Lernprozess zu unterstützten. In Betrachtung dieses Ziels werden drei Anforderungen an die Applikation erkennbar:
 \begin{description}
 \item[1. Verständlichkeit]
-Dadurch, dass in der Schule viele unterschiedliche Kompetenzstufen zusammen kommen, muss eine solche Anwendung nicht nur erfahrene Nutzer ansprechen, sondern intuitiv auch von weniger erfahrenen Benutzern bedienbar sein. Während Nutzer Prozesse aus dem Kontext mithilfe logischer Schlussfolgerung und übergreifenden Richtlinien ableiten können, fehlt diese Intuition den unerfahrenen. Somit ist es wichtig, die Applikation so einfach wie möglich zu gestalten. Das minimiert die Gefahr, dass kein Schüler durch technisches Ungeschick Nachteile erleidet. Unterstützt wird die benutzerfreundliche Oberfläche durch eine detaillierte Anwendungshilfe.
+Dadurch, dass in der Schule viele unterschiedliche Kompetenzstufen zusammen kommen, muss eine solche Anwendung nicht nur erfahrene Nutzer ansprechen, sondern intuitiv auch von weniger erfahrenen Benutzern bedienbar sein. Anwendungen überfordern Nutzer mit unübersichtlichem UI, zu vielen und undeutlichen Untermenüs, unnötigen Funktionen, inkonstantem UI und weiteren Gründen. Somit ist es wichtig, die Applikation so einfach wie möglich zu gestalten. Das minimiert die Gefahr, dass Schüler durch technisches Ungeschick Nachteile erleiden. Unterstützt wird die benutzerfreundliche Oberfläche durch eine detaillierte Anwendungshilfe.
 \item[2. Verfügbarkeit]
-Ein offensichtlicher, dennoch oft vergessener Punkt ist, dass alle Schüler das Tool verwenden können sollen. Dabei ist die entscheidende Frage die Wahl der Plattform, da finanziell schwache Familien häufig weniger technische Hilfsmittel zur Verfügung stehen. Daraus ergibt sich die Herausforderung, auch diesen Kindern einen Zugriff auf optimale Lernmethoden und Umgebungen zu gewährleisten. Unter diesen Punkt fällt ebenfalls, dass die Applikation so günstig wie möglich sein sollte, damit auch finanziell schwache Anwender von den Vorteilen der Anwendung profitieren können.
+Ein offensichtlicher, dennoch oft vergessener Punkt ist, dass alle Schüler das Tool verwenden können sollen. Dabei ist die entscheidende Frage die Wahl der Plattform, da sich finanziell schwache Familien die neusten und besten technischen Geräte meist nicht leisten können. Das trifft ebenfalls auf teurere Marken wie Apple zu. Daraus ergibt sich die Herausforderung, auch diesen Kindern einen Zugriff auf optimale Lernmethoden und Umgebungen zu gewährleisten. Unter diesen Punkt fällt ebenfalls, dass die Applikation so günstig wie möglich sein sollte, damit auch finanziell schwache Anwender von den Vorteilen der Anwendung profitieren können.
 \item[3. Zentrale Lernstoffverwaltung]
 Als Letztes ist eine gleiche Informationsgrundlage für einen gleichberechtigten Lernprozess von Nöten. Mithilfe einer zentralen Sammlung des Lehrstoffs werden unterschiedliche Datenlagen ausgeschlossen. Eine solche Sammlung sollte durch Lehrkräfte verwaltet werden, um Unterrichtsmaterialien, Vokabellisten und weiteren Lernstoff einheitlich für Schüler bereitstellen zu können.
 \end{description}
@@ -20,12 +21,30 @@ Als Letztes ist eine gleiche Informationsgrundlage für einen gleichberechtigten
 % -------------------------------------------
 
 \section{Funktionen}
+\label{section:funktionen}
 In diesem Abschnitt werden die einzelnen Funktionen der Applikation erörtert. Dabei wird der Fokus auf Begründungen und Gedankengänge gelegt, welche im Kapitel \ref{section:programmierung} implementiert werden. Die Funktionen der Applikation sind unter besonderer Berücksichtigung der im Abschnitt \ref{section:rahmenbedingungen} aufgestellten Rahmenbedingungen entworfen worden.
 
 \subsection{Dateimanagement}
-Damit der Nutzer einen Überblick über alle Karteikarten behält, werden diese in einem System ähnlich einer Ordnerstruktur organisiert. Um eine passende Repräsentation zu wählen, wurde für die Speichermöglichkeiten ein typisches Beispiel für Schüler reproduziert. Die gespeicherten Karten lassen sich in erster Ordnung in verschiedene Fächer teilen. Karteikarten für Mathematik, Englisch und Deutsch sollten sichtlich voneinander unterscheidbar sein. Jedes Fach kann zudem noch in einzelne Themen unterteilt werden. Am Beispiel Mathematik könnten mögliche Themen Algebra und Analysis sein. Diese Themen lassen sich in weitere Unterthemen einteilen, wie Integralrechnung, Extremstellenberechnung und andere. 
+\ref{subsection:dateimanagement}
+Damit der Nutzer einen Überblick über alle Karteikarten behält, werden diese in einem System ähnlich einer Ordnerstruktur organisiert. Damit wird einerseits ein Wiedererkennungswert gegeben und erfüllt anderseits schultypsiche Szenarien. So werden Beispielsweise die Unterrichtsfächer als Ordner dargestellt. Für die jeweiligen Fächer werden mit Unterordnern die Themen gespeichert. Die Themen können dann weiter aufgefächert und in Order sortiert werden. Die nötige Tiefe der Ordnerstruktur variiert, durch unbestimmte Anzahl an Unterthemen, bei jedem Fach und Thema. Somit ist eine herkömmliche Ordnerstruktur, die beste Wahl, damit der Nutzer nicht bei sonderfällen limitiert wird, während eine übersichtliche Darstellung gewährleistet wird.
 
-Folglich sollten die Ordner, welche die Themen repräsentieren, unbestimmt tief reichen. Dafür wurde grundlegend auf ein gleiches System wie jede herkömmliche Ordnerstruktur zurückgegriffen. Die Abbildung \ref{fig:appdatabase} zeigt, dass die Ordner der Anwendung in einer SQL-Datenbank gespeichert werden. Die Tabelle \texttt{folder} hat 7 Attribute, wobei 3 für das Speichern relevant sind. Der Index eines Eintrags ist ein eindeutiger Wert und ein Ordner kann damit bestimmt werden. Das Attribut \texttt{name} trägt eine lesbare Bezeichnung des Ordners, die vom Nutzer vergeben werden kann. Der Wert muss nicht eindeutig sein und kann beispielsweise Mathematik, Englisch, Algebra oder Analysis sein. Als Letztes bestimmt \texttt{root}, ob ein Ordner Unterordner hat, indem jeder Ordner speichert, welcher der übergeordnete Ordner ist. Durch diese Art der Konstruktion können durch eine einfach SQL-Abfrage mit Filter auf dem Feld \texttt{root} alle Unterordner für einen spezifischen Ordner gefunden werden. Da es sich hierbei um eine 1:n-Beziehung handelt, kann ein Ordner eine beliebige Zahl Unterordner enthalten.
+\begin{center}
+    \begin{table}[H]
+        \begin{tabular}{|c|c|}
+            \hline
+            index & Primärschlüssel der Tabelle \texttt{folder}, mit welchen der Ordner eindeutig \\ 
+            & identifiziert werden kann. \\ 
+            \hline
+            root & Der Index des übergeordneten Ordners \\  
+            \hline
+            name & Der vom Nutzer für den Ordner vergebene Name \\
+            \hline
+        \end{tabular}
+        \caption{\label{tab:attribute_ordnermanagement}Für das Ordnermanagement relevante Attribute}
+    \end{table}
+\end{center}
+
+Die Tabelle \ref{tab:attribute_ordnermanagement} zeigt die Attribute der im Hintergrund liegenden SQL-Datenbank, welche für das Speichern und Verwalten von Ordnern gebraucht werden. Der Index eines Eintrags ist ein eindeutiger Wert und ein Ordner kann damit bestimmt werden. Das Attribut \texttt{name} trägt eine lesbare Bezeichnung des Ordners, die vom Nutzer vergeben werden kann. Der Wert muss nicht eindeutig sein und kann beispielsweise Mathematik, Englisch, Algebra oder Analysis sein. Als Letztes bestimmt \texttt{root}, ob ein Ordner Unterordner hat, indem jeder Ordner speichert, welcher der übergeordnete Ordner ist. Durch diese Art der Konstruktion können durch eine einfach SQL-Abfrage mit Filter auf dem Feld \texttt{root} alle Unterordner für einen spezifischen Ordner gefunden werden. Da es sich hierbei um eine 1:n-Beziehung handelt, kann ein Ordner eine beliebige Zahl Unterordner enthalten.
 
 \begin{figure}[ht!]
   \centering
@@ -41,38 +60,124 @@ Folglich sollten die Ordner, welche die Themen repräsentieren, unbestimmt tief 
   \end{minipage}
 \end{figure}
 
-Auf jeder Ansicht, außer der Suche und des Kartenlernen, ist es für den Nutzer möglich, Karten und Ordner zu erstellen. Dafür wird ein \textit{Floating Action Button} (\textit{FAB}) in der rechten unteren Ecke angezeigt. Wenn der \textit{FAB} gedrückt wird, dann wird um zwei weitere Optionen ergänzt. Mit den neuen Optionen lassen sich Ordner und Karten erstellen. Für einen Ordner muss ein Name angegeben werden. Optional sind Pfad und ob der Ordner öffentlich ist. Standardmäßig wird für den Pfad der Ordner ausgewählt, welcher ausgewählt war, als der Ordner erstellt wurde. Wenn ein Ordner in einem Ordner mit Karten erstellt wird, dann werden die Karten in einen Subordner \textit{Karten} umsortiert.
+Auf jeder Ansicht, außer der Suche und des Kartenlernen, ist es für den Nutzer möglich, Karten und Ordner zu erstellen. Dafür wird ein \textit{Floating Action Button} (\textit{FAB}) in der rechten unteren Ecke angezeigt, welcher beim drücken um zwei weitere Optionen ergänzt wird. Mit den neuen Optionen lassen sich Ordner und Karten erstellen. 
 
-Gegensätzlich Ordner löschen geht über die Einstellung der Ordner. Entweder kann auf einen Ordner lange gehalten werden oder in einem Ordner auf das Zahnrad, welches Einstellungen weitgreifend darstellt, geklickt werden, um die Einstellung zu öffnen. In den Einstellungen kann der Ordner nicht nur gelöscht werden, sondern auch der Name geändert, der Pfad geändert und der Ordner aufgelöst werden. Beim Ändern des Pfads wird die zuvor erläuterte \texttt{root} auf einen neuen Wert geändert. Während beim Löschen der komplette Inhalt des Ordners gelöscht wird, wird beim Auflösen eines Ordners der Inhalt auf den Überordner übertragen. 
+Beim erstellen eines Ordners, muss der Name angegeben werden, während Pfad und Zugangsberechtigung, welche bestimmt ob andere Nutzer den Ordner ebenfalls sehen können, optional sind. Im Fall, dass kein Pfad angegeben wird, wird Standardmäßig der Ordner ausgewählt, welcher ausgewählt war, als der neue Ordner erstellt wurde. Mit einem Zahnrad in der Ordneransicht lassen sich Einstellungen aufrufen, mit welchen sich die vom Nutzer erstellten Ordner bearbeiten lassen. Die Einstellungen umfassen das Ändern von Name, Pfad und Zugangsberechtigung, sowie das löschen des Ordners samt Inhalt.
 
-Beim Erstellen einer Karte, werden Vorderseite und Rückseite gefordert. Die Vorderseite ist der Wert, welcher während des Lernprozesses jeder Zeit angezeigt wird. Optional können wieder Pfad und Zugangsberechtigung definiert werden. Der Pfad wird durch der \texttt{root} Feld der Karte gespeichert. Über die Referenz zum Ordner, kann der Inhalt des Ordners mit einer SQL-Abfrage bestimmt und angezeigt werden. Dafür muss der \texttt{index} der Ordners in der \texttt{card} Tabelle gesucht werden und alle Treffer sind Karten.
-
-Für eine erweiterte Struktur können Karteikarten und Ordner nicht zusammen erscheinen. Das bedeutet, wenn ein Ordner Unterordner hat, kann dieser keine Karten mehr enthalten. Um das zu gewährleisten wird nicht nur das Hinzufügen blockiert, sondern auch das Äuflösen von einem Ordner mit Karteikarten. Die Idee dahinter ist es Thema und Inhalt sichtlich und verständlich zu trennen.
+Die andere Option ist das Erstellen einer Karte, wobei nicht nur ein Wert angegeben werden muss, sondern Vorder- und Rückseite der Karte brauchen einen Wert. Die Vorderseite wird während des Lernprozesses jederzeit angezeigt und ist die Assoziation für das zu lernende Wissen auf der Rückseite der Karte. Optional können wieder Pfad und Zugangsberechtigung definiert werden. Über die Referenz zum Ordner, kann der Inhalt des Ordners mit einer SQL-Abfrage bestimmt und angezeigt werden.
 
 % ------------ Lernen von Karten ------------
 \subsection{Lernen von Karten}
-In jeder Ansicht wird dem Nutzer ein großer, grüner \texttt{Button} präsentiert. Bei Drücken des \texttt{Buttons}, wird eine neue Ansicht geladen. In dieser Ansicht werden alle Karten präsentiert, welche in den Unterordnern vorhanden sind. Die Reihenfolge der Karten basiert dabei, auf dem vorher thematisierten Prinzip von \textit{Spaced Repetition}. Für jede Karte wird in der Datenbank eine Zahl gespeichert. Karten, die basierend auf der bisherigen Lernleistung als unsicher eingestuft werden, werden dem Nutzer als erstes zur Wiederholung angezeigt. Um die Frustration des Nutzers gering zu halten, werden zwischen die unsicheren Karten, manchmal leichtere, schon bekannte Karten gemischt. Das basiert auf dem Prinzip, dass die Motivation von Menschen am höchsten ist, wenn wir weder vor einem, für unseren Wissensstand, zu schweren oder leichtem Problem stehen \cite{AtomicHabits}.
+In jeder Ansicht wird dem Nutzer ein großer, grüner \texttt{Button} präsentiert. Bei Drücken des \texttt{Buttons}, wird eine neue Ansicht geladen. In dieser Ansicht werden alle Karten präsentiert, welche in den Unterordnern vorhanden sind. Die Reihenfolge der Karten basiert dabei, auf dem vorher thematisierten Prinzip von \textit{Spaced Repetition}. Für jede Karte wird in der Datenbank die Anzahl der Tage bis zur nächsten Wiederholung gespeichert. Karten, die basierend auf der bisherigen Lernleistung als unsicher eingestuft werden, bekommen eine niedrige Anzahl an Tagen und werden damit dem Nutzer als erstes zur Wiederholung angezeigt. Um die Frustration des Nutzers gering zu halten, werden zwischen die unsicheren Karten, manchmal leichtere, schon bekannte Karten gemischt. Das basiert auf dem Prinzip, dass die Motivation von Menschen am höchsten ist, wenn wir weder vor einem, für unseren Wissensstand, zu schweren oder leichtem Problem stehen \cite{AtomicHabits}.
 
 Sobald der Nutzer eine Karte eingesehen hat, stehen ihm zwei Möglichkeiten zur Verfügung, um sein Verständnis zu überprüfen. Wenn nach links gewischt wird, bedeutet das, dass der Nutzer die Karte nicht konnte und damit wird die Zahl der Karte wieder auf 0 reduziert. In dem Fall, dass die Karte nach rechts geschoben wird, wird dem System gesagt, dass der Nutzer die Karte auswendig konnte. Danach wägt das System die neue Zahl für die Karte mit einem Algorithmus ab. Dieser setzt sich zusammen aus:
 
 \begin{description}
-\item[1. Betrachtungsdauer der Vorderseite]
-Eine kurze Zeit bedeutet, dass der Nutzer sofort wusste, was auf der Rückseite steht oder im gegensätzlichen Fall, direkt wusste, dass er es nicht weiß. Bei einer relativ langen Zeit kann davon ausgegangen werden, dass der Nutzer lange brauchte um sich die Erinnerung an die Rückseite ins Gedächtnis zu rufen.
+\item[1. Betrachtungsdauer der Vorderseite] \label{Betrachtungsdauer_Vorderseite}
+Eine kurze Zeit bedeutet, dass der Nutzer sofort wusste, was auf der Rückseite steht oder im gegensätzlichen Fall, direkt wusste, dass er es nicht weiß. Bei einer relativ langen Zeit kann davon ausgegangen werden, dass der Nutzer lange brauchte um sich die Erinnerung an die Rückseite ins Gedächtnis zu rufen. Es ist ebenfalls möglich, dass der Nutzer sein Handy kurz zur Seite gelegt hat oder ähnliches und deswegen einen hohen Wert bekommt. Dieser Fehler kann jedoch außen vor gelassen werden, da beim berechnen des Wiederholungszeitraums, einen zu hohen Wert zu haben, schwerwiegender ist, als einen zu kleinen. Denn beim Wiederholen nach einem zu langen Zeitraum, kann es passieren, dass der Inhalt vergessen wurde und wieder neu erlernt werden muss. Ist die Wiederholung nach einem kurzen Zeitraum, dann wird der Inhalt früher wiederholt als nötig, aber hat sonst keine negativen Auswirkungen.
 \item[2. Betrachtungsdauer der Lösung]
-Ein kurzes betrachten der Rückseite legt nahe, dass die Karte bekannt war. Die Karte war weitestgehend bekannt, wurde aber sicherheitshalber mehrmals gelesen oder ein kleiner Fehler ist unterlaufen, welcher für den Gesamtkontext von marginaler Auswirkung war, wenn die Rückseite länger angeschaut wird.
-\item[3. Die Länge des Inhalts der Vorderseite.]
+\label{Betrachtungsdauer_Lösung}
+Ein kurzes betrachten der Rückseite legt nahe, dass die Karte bekannt war. Wenn die Rückseite länger betrachtet wurde, ist die Karte weitestgehend bekannt, aber der Inhalt wurde sicherheitshalber mehrmals wiederholt oder ein kleiner Fehler ist unterlaufen, welcher für den Gesamtkontext von marginaler Auswirkung ist.
+\item[3. Die Länge der Vorderseite.]
 Die im ersten Punkt gemessene Zeit der Vorderseite muss in Relation zur Länge der Vorderseite gebracht werden. So lässt sich der Inhalt einer Kartenvorderseite schneller lesen und bearbeiten, wenn dieser nur aus einem einzigen Wort besteht. Enthält die Karte jedoch mehrere Sätze, so steigt die Bearbeitungszeit mindestens linear an.
-\item[4. Die Länge des Inhalts der Rückseite.]
-spielt nicht nur eine Rolle für den Punkt 2 basierend auf dem in Punkt 3 erklärten Prinzip, sondern ist auch wichtig für Punkt 1, da ein kurzer Inhalt schneller wiedergegeben werden kann als ein langer.
+\item[4. Die Länge der Rückseite.]
+Ein wichtiger Faktor spielt die Länge des Inhalts der Rückseite, denn dieser hat Einfluss auf das Ergebnis von Punkt \ref{Betrachtungsdauer_Vorderseite} und \ref{Betrachtungsdauer_Lösung}. Eine kurze Vorderseite kann schnell gelesen werden und damit ist die Bearbeitungsdauer der Vorderseite geringer. Dazu kommt, dass eine kurze Rückseite auch die Bearbeitungsdauer der Vorderseite reduziert, da es weniger Inhalt gibt, welcher ins Gedächtnis gerufen werden muss. Eine kurze Rückseite hat auch Auswirkungen auf die Betrachtungsdauer der Rückseite, denn ein kurzer Inhalt kann schneller gelesen werden.
 \end{description}
 
-Anhand dieser Gesichtspunkte ist das System in der Lage abzuwägen, wie gut der Nutzer die Karte konnte. Folgende Bedingungen konzentrieren sich auf den Fall, dass der Nutzer nach rechts wischt. Wenn die Zeit, mit welcher der Nutzer sich die Vorderseite angeguckt hat, relativ zur Länge der Vorderseite kurz ist und die Rückseite nur kurz angeguckt wurde oder gar nicht, kann davon ausgegangen werden, dass der Nutzer die Karte gut beherrscht. Der ermittelte Wert ist damit sehr hoch. Der Nutzer beherrscht die Karte schlecht, wenn die Dauer der Vorderseite, wie oben geschildert, ebenfalls kurz ausfällt, aber die Rückseite dafür relativ Lange angeschaut wird. Es lässt sich vermuten, dass versehentlich nach rechts gewischt wurde oder ein Fehler unterlaufen ist, welcher aber ignoriert wurde. Im mittleren Fall, dauert die Vorderseite länger, aber die Rückseite ist vergleichsweise schnell. In dieser Möglichkeit, hat der Nutzer etwas länger braucht um auf die Lösung zu kommen, hatte sie aber richtig. Deswegen ist die Wertung mittel.
+Unter Berücksichtigung der exponentiellen Abnahme des erlernten Wissens und der oben genannten Gesichtspunkte, lässt sich die Formel \ref{rechnung} konstruieren. Die Unbekannte $x$ ist die Zeit, mit welcher die Vorder- bzw. Rückseite angeguckt wurde und $s$ ist die Anzahl der Zeichen der Vorder- bzw. Rückseite.
+\begin{equation}
+f_s(x) = 1.5 - \frac{1}{1+e^{-x + \frac{s}{10} + 5}}
+\label{rechnung}
+\end{equation}
 
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xmin=0, xmax=15,
+            ymin=0, ymax=3.5,
+            axis lines=center,
+            axis on top=true,
+            domain=0:15,
+            ]
+        
+            \addplot [mark=none,draw=red,/pgf/fpu=true,/pgf/fpu/output format=fixed,ultra thick] {1.5 - 1/(1+e^(-x + 10))};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Graphische Darstellung der Funktion \ref{rechnung}}
+\end{figure}
+
+In dem oben stehenden Graphen ist $s\rightarrow20$. Bei einem erhöhten $s$ schiebt sich der Graph nach rechts und die Antwortzeit des Nutzers, bevor das Ergebnis stark abnimmt, wird erhöht. Damit wird die Funktion an längere Karten angepasst, da ein längerer Inhalt länger gelesen und aufgesagt werden muss. Ohne diese Anpassung wäre es leichter, ein hohes Ergebnis bei Karten mit einem kurzen Inhalt zu erzielen und bei Karten mit einem langen Inhalt umso schwerer.
+
+Sobald eine Karte von Nutzer als gekonnt eingestuft wird, wird die Formel \ref{rechnung} für die Vorder- und Rückseite der Karte ausgeführt. Für die Vorderseite ist die unbekannte $x$ die gemessene Zeit der Vorderseite und $s$ ist die Länge der Vorder- und Rückseite, da die Länge beider einen Einfluss auf die Zeit hat. Denn die Länge der Vorderseite bestimmt, wie lang der Nutzer die Vorderseite lesen muss und die Länge der Rückseite hat Einfluss darauf, wie lang es dauert, bis der Nutzer den Inhalt wiedergegeben hat. Für die Rückseite wird nur die gemessene Zeit für $x$ und die Länge der Rückseite für $s$ gebraucht, da die Vorderseite darauf keinen Einfluss hat. Schlussendlich werden die beiden Ergebnisse aufaddiert, sodass sich ein Wert von 1 bis 3 ergibt. Dieser Wert wird auf den \textit{Score} der Karte addiert, welcher auf das Wiederholungsdatum addiert wird. Somit wird Karten, die nach dem System gut gekonnt werden, ein höherer \textit{Score} zugeteilt und sie werden später wiederholt.
+
+Die Auswirkungen der Länge von Vorder- und Rückseite bei gleicher Zeit werden in den Graphen a bis d aus Abbildung \ref{graphen_rechnung} dargestellt. Auffällig ist der gestaffelte Abfall, welcher dadurch zustande kommt, da $s$ aus $s_v+s_b$ und $s_b$ besteht. Die Stärke des Abfalls hängt von der Differenz von $s_v$ und $s_b$ ab. Je größer die Differenz, desto leichter fällt der \textit{Score}, bis der Graph in Abbildung b und c in drei Etappen eingeteilt werden kann. Es ist wichtig anzumerken, dass sich die $x$-Werte der beiden Funktionen in einem richtigen Anwendungsfall unterscheiden, lassen sich aber dann auch nicht mehr zusammen darstellen, wodurch der Einfluss der unbekannten $s$ nicht deutlich wird, weshalb in diesen Graphen auf den Sonderfall konzentriert wird. 
+
+\begin{figure}[H]
+  \centering
+  \subfloat[$s_v\rightarrow5$ und $s_b\rightarrow5$]{
+  \begin{tikzpicture}[scale=0.85]
+            \begin{axis}[
+                xmin=0, xmax=15,
+                ymin=0, ymax=3.5,
+                axis lines=center,
+                axis on top=true,
+                domain=0:15,
+                ]
+        
+                \addplot [mark=none,draw=red,/pgf/fpu=true,/pgf/fpu/output format=fixed,ultra thick] {1.5 - 1/(1+e^(-x + 10)) + 1.5 - 1/(1+e^(-x + 15))};
+            \end{axis}
+        \end{tikzpicture}}
+    \hfill
+    \subfloat[$s_v\rightarrow5$ und $s_b\rightarrow10$]{
+        \begin{tikzpicture}[scale=0.85]
+            \begin{axis}[
+                xmin=0, xmax=30,
+                ymin=0, ymax=3.5,
+                axis lines=center,
+                axis on top=true,
+                domain=0:30,
+                ]
+        
+                \addplot [mark=none,draw=red,/pgf/fpu=true,/pgf/fpu/output format=fixed,ultra thick] {1.5 - 1/(1+e^(-x + 20)) + 1.5 - 1/(1+e^(-x + 10))};
+            \end{axis}
+        \end{tikzpicture}}
+    \hfill
+    \subfloat[$s_v\rightarrow5$ und $s_b\rightarrow20$]{
+        \begin{tikzpicture}[scale=0.85]
+            \begin{axis}[
+                xmin=0, xmax=40,
+                ymin=0, ymax=3.5,
+                axis lines=center,
+                axis on top=true,
+                domain=0:40,
+                ]
+        
+                \addplot [mark=none,draw=red,/pgf/fpu=true,/pgf/fpu/output format=fixed,ultra thick] {1.5 - 1/(1+e^(-x + 30)) + 1.5 - 1/(1+e^(-x + 10))};
+            \end{axis}
+        \end{tikzpicture}}
+    \hfill
+    \subfloat[$s_v\rightarrow10$ und $s_b\rightarrow5$]{
+        \begin{tikzpicture}[scale=0.85]
+            \begin{axis}[
+                xmin=0, xmax=30,
+                ymin=0, ymax=3.5,
+                axis lines=center,
+                axis on top=true,
+                domain=0:30,
+                ]
+        
+                \addplot [mark=none,draw=red,/pgf/fpu=true,/pgf/fpu/output format=fixed,ultra thick] {1.5 - 1/(1+e^(-x + 20)) + 1.5 - 1/(1+e^(-x + 15))};
+            \end{axis}
+        \end{tikzpicture}}
+  \caption{Auswirkungen von $s_v$ und $s_b$ auf das erzielte Ergebnis}
+\end{figure}
+\label{graphen_rechnung}
 % -------------- Statistiken ----------------
 \subsection{Statistiken}
 Nach \cite{AtomicHabits} wirkt direkte Visualisierung des Fortschritts motivierend auf den Menschen. Dazu und um die Nutzererfahrung zu verbessern, indem eine optimale Lernzeit ermittelt wird, werden Statistiken angezeigt. Diese wurden mithilfe von Sessions verwirklicht. Beim Start eines Lernabschnitts wird eine Session gestartet. Für jede Session wird das Datum, die Start- und Endzeit, die Nummer des Ordners und die Anzahl an falschen und richtigen Karten gespeichert. Eine Session endet entweder damit, dass die Ansicht verlassen, die Applikation geschlossen wird oder länger als eine Minute im Hintergrund verweilt.
 
-Mit den gesammelten Daten werden in der Statistiken-Ansicht detailliertere Informationen über die Nutzungsgewohnheiten anschaulich aufbereitet. In Abbildung \ref{fig:statistics} wird die Ansicht der Statistik dargestellt. In der ersten Reihe werden alle Karten im Ordner und die komplette gelernte Zeit angezeigt. Darunter folgt eine umfangreiche Ansicht der gelernten, ungelernten und neuen Karten. Es lässt sich der Zeitraum auswählen, welcher ein Jahr, Monat, Woche oder Tag sein kann. Für den Zeitraum lassen sich detaillierte Informationen abrufen, indem mit dem Finger über den Graphen gegangen wird. Für die Stelle, an der der Finger ist, wird die genau Anzahl an jeweiligen Karten angezeigt. Nach dem Graphen folgen zwei Ansichten für die durchschnittliche Nutzeraktivität. In der ersten Ansicht wird der Zeitraum angezeigt, in welchem der Nutzer am meisten lernt. Die zweite Statistik zeigt die Zeiträume, in welchen der Nutzer am effektivsten ist. Ermittelt wird das, indem die Anzahl der richtigen und falschen Karten in Relation zueinander und der kompletten Anzahl an gelernten Karten errechnet wird und der daraus resultierende Durchschnitt wird in die Ansicht eingefügt. Der Wert wird für jede Uhrzeit ermittelt und ermöglicht so einen guten Überblick darüber, wann am effektivsten gelernt wurde. Abgeschlossen wird die Anzeige der Statistik mit einem zusammenfassenden Satz, welcher eine optimale Lernzeit aus den vorliegenden Daten ermittelt. Dafür werden Effektivität und Zeit zusammengeführt und der Zeitraum mit den höchsten Werten ermittelt. Bei der Zusammenführung wird die Effektivität mehr gewichtet. Im Optimalfall kann für die Nutzer eine passende Lernzeit ermittelt werden, welche einerseits in den Zeitplan der Nutzer passt und andererseits die Effektivität der Lernzeit möglichst hochhält.
+Mit den gesammelten Daten werden in der Statistiken-Ansicht detailliertere Informationen über die Nutzungsgewohnheiten anschaulich aufbereitet. In Abbildung \ref{fig:statistics} wird die Ansicht der Statistik dargestellt, welche in der ersten Zeile die Anzahl an Karten und die gelernte Zeit darstellt. Darunter folgt eine umfangreiche Ansicht der gelernten, ungelernten und neuen Karten. Für diese lässt sich ein Zeitraum von Jahr, Monat und Tag auswählen und mit dem Finger detaillierte Informationen abrufen. Für die Stelle, an der der Finger ist, wird die genau Anzahl an jeweiligen Karten angezeigt. Nach dem Graphen folgen zwei Ansichten für die durchschnittliche Nutzeraktivität. In der ersten Ansicht wird der Zeitraum angezeigt, in welchem der Nutzer am meisten lernt. Die zweite Statistik zeigt die Zeiträume, in welchen der Nutzer am effektivsten ist. Ermittelt wird das, indem die Anzahl der richtigen und falschen Karten in Relation zueinander und der kompletten Anzahl an gelernten Karten errechnet wird und der daraus resultierende Durchschnitt wird in die Ansicht eingefügt. Der Wert wird für jede Uhrzeit ermittelt und ermöglicht so einen guten Überblick darüber, wann am effektivsten gelernt wurde. Abgeschlossen wird die Anzeige der Statistik mit einem zusammenfassenden Satz, welcher eine optimale Lernzeit aus den vorliegenden Daten ermittelt. Dafür werden Effektivität und Zeit zusammengeführt und der Zeitraum mit den höchsten Werten ermittelt. Bei der Zusammenführung wird die Effektivität mehr gewichtet. Im Optimalfall kann für die Nutzer eine passende Lernzeit ermittelt werden, welche einerseits in den Zeitplan der Nutzer passt und andererseits die Effektivität der Lernzeit möglichst hochhält.
 
 \begin{figure}[ht!]
     \centering
@@ -85,29 +190,33 @@ Darüber hinaus wird in jedem Ordner eine vereinfachte Ansicht für die gelernte
 
 % ------------------ Kurse ------------------
 \subsection{Kurse}
-Mit dem Fokus auf eine schulähnliche Umgebung, dürfen Klassen bzw. Kurse nicht fehlen. Ein Kurs funktioniert in der Anwendung genauso wie in der Schule. Ein Nutzer kann einen Kurs erstellen und verwalten. Das bezieht sich auf die Mitglieder und die Inhalte, beide können nach Belieben wieder entfernt werden. Der große Vorteil an Kursen ist, dass mit ihnen Inhalte einfach geteilt werden können. In den Einstellungen kann das Teilen auch für Nutzer freigegeben werden, entweder mit oder ohne Überprüfung des Verwalters.
+Mit dem Fokus auf eine schulähnliche Umgebung dürfen Klassen bzw. Kurse nicht fehlen. Ein Kurs wird vom einem Nutzer erstellt und verwaltet. In den Aufgabenbereich des Erstellers fallen hinzufügen und entfernen von Daten und das Verwalten von der Teilnehmerliste. Der große Vorteil an Kursen ist, dass mit ihnen Inhalte einfach geteilt werden können. In den Einstellungen kann das Teilen auch für Nutzer freigegeben werden, entweder mit oder ohne Überprüfung des Erstellers.
 
-Finden lässt sich der Inhalt der Gruppen in einem neuen Ordner namens \textit{Gruppen} auf der Startansicht. Jede Gruppe hat ihren eigenen Unterordner und die darin enthaltenen Inhalte sind die mit der Gruppe geteilten Ordner und Karteikarten. Persönliche Änderungen können, ohne jeglichen Effekt für die anderen Nutzer, vorgenommen werden. Die eigenen Änderungen werden durch zentrale Änderungen an den jeweiligen Karteikarten überschrieben.
+Finden lässt sich der Inhalt der Gruppen in einem neuen Ordner namens \textit{Gruppen} auf der Startansicht. Jede Gruppe hat ihren eigenen Unterordner und die darin enthaltenen Inhalte sind die mit der Gruppe geteilten Ordner und Karteikarten. Persönliche Änderungen können, ohne jeglichen Effekt für andere Nutzer, vorgenommen werden. Die eigenen Änderungen werden durch zentrale Änderungen an den jeweiligen Karteikarten überschrieben.
 
-Um einen Kurs beizutreten, kann ein QR-Code innerhalb der Anwendung eingescannt werden. Der Scanner findet sich in der Suchleiste. Sobald der QR-Code eingescannt wurde, wird der Nutzer dem System mitgeteilt und dem Kurs hinzugefügt. Die Inhalte des Kurses werden dann auf das Gerät heruntergeladen.
+Um einen Kurs beizutreten, kann ein QR-Code innerhalb der Anwendung mit einem Scanner innerhalb der Suchleiste eingescannt werden. Nach dem scannen, wird der Nutzer dem Kurs hinzugefügt und die Inhalt werden auf das Gerät des Nutzers installiert.
 
-Anwendungsfälle für Kurse sind Zusammenfassungen der Unterrichtsstunden, die einzelnen Themen in Karteikarten zusammengefasst oder für Klausuren, noch einmal jedes Thema verständlich summiert. Mit diesen Ordnern kann für die Klausur gelernt werden. Über den Verlauf des Jahres sollten die Unterrichtsstunden wiederholt werden und zur Vorbereitung auf die Klausur wird auf die Ordner mit den Klausurthemen gewechselt. So kann über das Jahr der Inhalt gefestigt werden und die Themen der Klausurvorbereiten sollten so leichter fallen.
+Die Ordner und Karten im Kurs sind beispielsweise Zusammenfassungen der Unterrichtsstunden, die einzelnen Themen oder Unterlagen für die Klausuren. Über den Verlauf des Jahres sollten die Unterrichtsstunden wiederholt werden und zur Vorbereitung auf die Klausur wird auf die Ordner mit den Klausurthemen gewechselt. So kann über das Jahr der Inhalt gefestigt werden und die Themen der Klausurvorbereiten sollten so leichter fallen.
 
 % ------------ Teilen von Ordnern -----------
 \subsection{Öffentliche Ordner}
-Online Ordner funktionieren ähnlich wie Kurse. Die beiden unterscheiden sich lediglich in der adressierten Zielgruppe. Kurse lassen sich nicht in der Suche finden, da diese privat gehalten und begleitend zum Unterricht geführt werden sollen. Die Online Ordner wiederum sind als Ordner von anderen für andere angesehen. So können bilinguale Nutzer einen Ordner erstellen, mit dem Interessierte Sprachen lernen können. Damit soll ermöglicht werden, dass Themen von Experten aufbereitet und der breiten Masse zum eigenständigen Lernen zur Verfügung gestellt werden.
+Öffentlich Ordner und Kurse funktionieren gleich und unterscheiden sich nur in den Adressaten. Da Kurse privat gehalten und begleitend zum Unterricht geführt werden sollen, können Kurse nicht in der Suchleiste gefunden werden. Die Online Ordner wiederum sind als Ordner von anderen für andere angesehen. So können bilinguale Nutzer einen Ordner erstellen, mit dem Interessierte Sprachen lernen können. Damit soll ermöglicht werden, dass Themen von Experten aufbereitet und der breiten Masse zum eigenständigen Lernen zur Verfügung gestellt werden.
 
-Verwirklicht wird das, indem die Ordner in ihren jeweiligen Einstellungen eine Option zum Veröffentlichen haben. Sobald diese aktiviert wird, sind die Daten für jeden zugänglich. Gefunden werden die Ordner mit der Suchleiste, über den Namen des Ordners. Die Ordner können bei Interesse heruntergeladen und bearbeitet werden. Dabei greift das gleiche Prinzip wie bei Gruppen. Änderungen sind nur temporär und sobald die Karteikarte mit den Änderungen aktualisiert wird, werden die alten Werte überschrieben. Das damit verbunden Potential für mögliche Weiterentwicklung in diesem Bereich wird im Fazit unter Abschnitt \ref{weiteresvorgehen} noch einmal aufgegriffen.
+Verwirklicht wird das, indem die Ordner in ihren jeweiligen Einstellungen eine Option zum Veröffentlichen haben. Sobald aktiviert, sind die Ordner für jeden zugänglich und können über die Suchleiste heruntergeladen und danach gelernt oder nach dem Prinzip der Gruppen bearbeitet werden. Das beutet, Änderungen sind nur temporär und sobald die Karteikarte mit den Änderungen aktualisiert wird, werden die alten Werte überschrieben. Das damit verbunden Potential für mögliche Weiterentwicklung in diesem Bereich wird im Fazit unter Abschnitt \ref{weiteresvorgehen} noch einmal aufgegriffen.
 
 % -------------------------------------------
 % Entwurf des Backends
 % -------------------------------------------
 
 \section{Entwurf des Backends}
+\label{section:entwurf_backend}
 
 % ------ Clientside ------
 \subsection{Clientside}
-\begin{figure}[ht!]
+
+Die Datenbank umfasst 9 Tabellen, welche zusammen die Funktionen der Applikation ermöglichen. Um die zentrale Tabelle \texttt{folder} werden die Features konstruiert. Das in Unterabschnitt \ref{subsection:dateimanagement} erklärte Dateimanagement bedient sich an den Tabellen \texttt{folder} und \texttt{card}. Da ein Ordner nur einen übergeordneten Ordner und beliebig viele Unterordner haben kann, besteht zwischen \texttt{folder index} und \texttt{folder root} eine 1-n Beziehung, wobei \texttt{index} die 1 zugewiesen bekommt. Das trifft auch auf die Beziehung zwischen \texttt{folder} und \texttt{root} zu, denn ein Ordner kann beliebig viele Karten beinhalten, aber eine Karte kann nur in einem Ordner sein. Das Feature der öffentlichen Ordner gliedert sich in das Dateimanagement ein und wird nicht separat abgespeichert. Anders ist es für Kurse, sowie die Statistiken, welche beide noch um Tabellen ergänzt werden müssen. Bei ersterem werden die Tabellen \texttt{folder}, \texttt{class} und \texttt{participant} benötigt, welche wegen der Beziehungen untereinander durch die Tabellen \texttt{shared\_files} und \texttt{takes\_part\_in} ergänzt werden müssen. Die Tabelle \texttt{shared\_files} ermöglicht die n-n Beziehung zwischen \texttt{class} und \texttt{folder}, die von Nöten ist, um mit einer Klasse unbestimmt viele Ordner und einen Ordner mit mehreren Klassen zu teilen. Des Weiteren haben \texttt{class} und \texttt{participant} die selbe Kardinalität, denn es muss ermöglicht werden, dass eine Klasse beliebig viele Teilnehmer hat und ein Nutzer an beliebig vielen Klasse teilnehmen kann, auch im System der Anwendung. Schlussendlich werden drei Tabellen für die Statistik benötigt. In der Tabelle \texttt{session} werden einzelne Aktivitäten gespeichert. Um zu ermitteln, wann das war, muss der Startpunkt gespeichert werden. Ergänzend dazu wird auch gespeichert, wann wieder aufgehört wurde, um die Dauer zu ermitteln. Damit die Werte auch einem Ordner zugewiesen werden können, wird der \texttt{index} des Ordners gespeichert. Dazu kommt die Tabelle \texttt{progress}, mit welcher der tägliche Fortschritt des Nutzers gespeichert wird, um diesen in einem Graphen darzustellen. Das wird genauso wie die Sessions für jeden Ordner gespeichert und dargestellt. 
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/app_datenbank.png}
     \caption{Datenbank der Anwendung}
@@ -116,20 +225,11 @@ Verwirklicht wird das, indem die Ordner in ihren jeweiligen Einstellungen eine O
 
 % ------ Serverside ------
 \subsection{Serverside}
-Das Backend des Servers besteht aus der Programmiersprache Python und dem \textit{Relation Database Management System} MySQL. Python bildet die Logik des Servers und MySQL ist die SQL-Schnittstelle zur Datenbank. Wenn eine Abfrage an den Server gestellt wird, arbeiten beiden zusammen, um eine \textit{Response} an den Nutzer zu schicken.
+Die Datenbank des Servers fällt relativ zur Datenbank der Applikation klein aus, weil diese nicht die Statistiken der Nutzer speicher, sondern lediglich die Ordner, Karten, Kurse und Nutzer. In der Tabelle \texttt{user} wird eine E-Mail und ein Passwort von Nutzer gespeichert, damit dieser sich identifizieren kann. Für das Passwort wird noch ein \textit{salt} gespeichert, der in Abschnitt \ref{section:sicherheit} noch einmal aufgegriffen wird. Zu guter letzt wird für jeden Nutzer eine eindeutige \texttt{id} gespeichert, durch die auf den Nutzer referiert werden kann.
 
-% das hier ist alles out of mind geschrieben -> muss noch mit echten Daten gefüttert werden.
-Python ist eine von Guido van Rossum entwickelte high-level Programmiersprache, welche einen hohen Wert auf einfach Syntax legt. Python ist mittlerweile zu der meist genutzten Programmiersprache der Welt geworden. Am meisten wird sie für Scatch-Programming, Data-Analytics und AI-Programming genutzt. MySQL ist eine SQL-Programmiersprache, welche ähnlich wie die im Unterricht thematisierte Programmiersprache SQLite funktioniert. Der zentrale Unterschied der beiden ist, dass MySQL schneller ist und mehr Features hat. Dafür wird für SQLite kein Server gebraucht.
+Ordner die auf dem Server gespeichert werden machen von der Id gebrauch, damit sie dem Nutzer zugeordnet werden können. Die \texttt{folder} Tabellen unterscheiden sich darin, dass die Server Datenbank nicht die \texttt{online\_id} speichert, da Id die online Id ist. Dadurch, dass keine Statistiken gespeichert werden unterscheiden sich die Kartentabellen stark von einander, denn die Kartentabelle auf dem Server speichert nur die vier rudimentären Dinge: \texttt{id}, \texttt{front}, \texttt{back} und \texttt{root}.
 
-
-
-Für den Server wurde auf den Anbieter Linode zurückgegriffen 
-Linode erklären
-Datenbank erklären
-
-Einleitung
-Bild von der Datenbank
-Datenbank erklären und Gedanken erläutern, wieso ich mich für diese Tabellen und Darstellungsmöglichkeiten entschieden habe.
+Für die Tabelle \texttt{class} wird die Tabelle \texttt{takes\_part\_in} hinzugefügt, damit, wie auch schon bei der Datenbank der Anwendung, ein Nutzer in beliebig vielen Klassen sein und eine Klasse unbestimmt viele Teilnehmer haben kann. Das gleiche Prinzip gilt für die geteilten Daten. Diese werden mit der Tabelle \texttt{class\_shared\_files} Klassen zugeordnet, indem Klassenid und Ordnerid zusammen gespeichert werden. Damit ist es möglich Klassen mehrere Ordner zuzuweisen und einen Ordner mit mehreren Klassen zu teilen.
 
 % ------ Datenaustausch ------
 \subsection{Datenaustausch}
@@ -147,61 +247,48 @@ Die Applikation wird über Änderungen informiert, indem der Server registriert,
 % -------------------------------------------
 
 \section{Sicherheit}
-In Deutschland wird ein hohes Augenmerk auf die Sicherheit von Nutzerdaten gelegt. Wer in Deutschland eine Applikation mit Nutzerdatenverwaltung veröffentlich möchten, muss sich an die Datenschutz-Verordnung (DSGVO) halten. Diese bezieht sich auf Daten die automatisiert und nicht automatisiert verarbeitet werden. Die Grundsätze der DSGVO werden im Artikel 5 definiert.
-\begin{description}
-\item[1. Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz]
-Die Daten müssen auf rechtmäßige Weise und für betroffene Personen nachvollziehbar verarbeitet werden.
-\item[2. Zweckbindung]
-Daten dürfen nur für festgelegte, eindeutige und legitime Zwecke gespeichert werden.
-\item[3. Datenminimierung]
-Das Maß der gespeicherten Daten sollte sich auf die für den Zweck nötigen Daten beschränken
-\item[4. Richtigkeit]
-Daten müssen sachlich richtig und auf den neusten Stand sein. Fehler müssen sofort gelöscht oder behoben werden.
-\item[5. Speicherbegrenzung]
-Daten, mit welchen auf Personen zurück geschlossen werden kann, dürfen nur solange gespeichert werden, wie sie für den Zweck gebraucht werden.
-\item[6. Integrität und Vertraulichkeit]
-Es muss eine angemessene Sicherheit für das speichern der Daten herrschen. Das beinhaltet den Schutz vor unbefugter und unrechtmäßiger Verarbeitung.
-\end{description}
+\label{section:sicherheit}
 
-\subsection{Salt und Secret Salt}
-Um sich bei dem Programm zu authentifizieren, wird von dem Nutzer eine Kombination aus Passwort und Nutzername genutzt. Diese beiden Informationen werden an den Server geschickt, welcher überprüft ob Nutzername und Passwort richtig angegeben worden sind. Das wird gemacht, indem Nutzername und Passwort mit den Einträgen in der Datenbank abgeglichen werden. Einher geht, dass wenn die Datenbank von Unbefugten kopiert wird, alle Nutzernamen mit ihren jeweiligen Passwörtern einsehbar sind. Damit können sich die Angreifer als andere Person ausgeben. Folglich, ist Speichern von Passwörtern in Klartext auf Servern grob fahrlässig.
+Um sich bei dem Programm zu authentifizieren, wird von dem Nutzer eine Kombination aus Passwort und E-Mail genutzt. Diese beiden Informationen werden an den Server geschickt, welcher überprüft ob E-Mail und Passwort richtig angegeben worden sind. Das wird gemacht, indem beide mit den Einträgen in der Datenbank abgeglichen werden. Einher geht, dass wenn die Datenbank von Unbefugten kopiert wird, alle E-Mails mit ihren jeweiligen Passwörtern einsehbar sind und Angreifer können sich als andere Personen ausgeben. Daraus lässt sich schließen, dass das Speichern von Passwörtern in Klartext auf Servern grob fahrlässig ist.
 
-Um diesem Fall entgegen zu wirken werden Passwort in modernen Systemen verschlüsselt. Ein häufig verwendetes Verfahren ist der SHA-256 Algorithmus. Das in 2001 veröffentliche und von der \textit{National Security Agency} entwickelte Verschlüsselungsverfahren basiert auf dem \textit{Merkles Meta-Verfahren}. Eine mit diesem Verfahren verschlüsselte Zeichenkette ergibt jedes mal das gleiche Ergebnis und es fast unmöglich die Zeichenkette aus dem Verfahren rückzuschließen. Ein weiterer Vorteil, ist das kleine Abweichen einen großen Einfluss auf das Ergebnis haben, wie an folgenden Beispielen erkennbar.
+Um diesem Fall entgegen zu wirken, werden Passwörter in modernen Systemen verschlüsselt. Ein häufig verwendetes Verfahren ist der SHA-256 Algorithmus. Eine mit diesem Verfahren verschlüsselte Zeichenkette ergibt jedes mal das gleiche Ergebnis und es quasi unmöglich die Zeichenkette aus dem Verfahren rückzuschließen. Ein weiterer Vorteil ist, dass kleine Abweichungen einen großen Einfluss auf das Ergebnis haben, wie an dem Beispiel in Tabelle \ref{tab:sha-algorihtm} erkennbar.
 
-\textbf{QT BEISPIEL!} \break
-Zeichenfolge 1: password \break
-Zeichenfolge 2: passw0rd \break\par
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+        \hline
+        password: & 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62 \\ & a11ef721d1542d8 \\
+        \hline
+        passw0rd: & 8f0e2f76e22b43e2855189877e7dc1e1e7d98c226c95db247 \\
+        & cd1d547928334a9 \\
+        \hline
+    \end{tabular}
+    \caption{SHA-256 Algorithmus auf password und passw0rd angewandt}
+    \label{tab:sha-algorihtm}
+\end{table}
 
-SHA-256 Output 1: \break 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 \break
-SHA-256 Output 2: \break 8f0e2f76e22b43e2855189877e7dc1e1e7d98c226c95db247cd1d547928334a9
+\textit{password} und \textit{passw0rd} unterscheiden sich in einem Zeichen, dennoch ähneln sich die resultierenden Hashes nur in drei Zeichen, weshalb es unmöglich ist, mit einem Hash auf den anderen rückzuschließen.
 
-Zeichenfolge 1 und Zeichenfolge 2 unterscheiden sich in einem Zeichen. Das Resultat des Ergebnisses ähnelt sich jedoch nur in 3 Zeichen. Mithilfe der beiden SHA Ergebnissen, ist es nicht möglich einen Zusammenhang zwischen den Passwörtern zu erstellen.
+Ein eingegebenes Passwort wird vom System auch nach dem SHA-256 Algorithmus verschlüsselt und dann mit den vorliegenden Passwort in der Datenbank abgeglichen. Wenn Eingabe und Hash gleich sind, dann wurde das richtige Passwort angegeben und der Nutzer wird eingeloggt.
 
-Dadurch, dass SHA-256 ein viel genutztes Verfahren ist, gibt es so genannte \textit{Rainbow Tables}. Das sind vorgefertigte Tabellen, welche häufig genutzte Passwörter in gehashter Form auflisten. Viele Internetnutzer benutzen leider simple Passwörter, weil diese leichter zu merken sind. Das Problem, je leichter das Passwort, desto wahrscheinlicher ist es, dass dieses in einem \textit{Rainbow Table} enthalten ist.
-% Den Prozess der Verschlüsselung noch genauer erklären
-% Erklären, dass das Passwort an den Server geschickt wird und dieser das dann hashed und dann erst abgleicht
-% Hier könnte ich noch mal auflisten wie die größten Rainbow Tables aussehen
-%Hier sollte ich noch ein paar Statistiken zu den häufigsten Passwörtern darstellen
-\textit{qwerty} gehört neben \textit{password} und \textit{123456} zu den häufigsten Passwörtern. Was sich wie ein Scherz anhört ist leider Realität. Dazu kommt noch, dass diese lachhaften Passwörter mit den selben Nutzernamen oder E-Mail auf jeder Seite wiederverwendet werden. Sollten Hacker an das Passwort des Nutzers kommen, dauert es meist nicht lange, bis sie die komplette Identität des Menschen klauen können. Dieser Aspekt ist ein gigantisches Sicherheitsproblem, weshalb \textit{password salts} erfunden wurden.
-% Hier noch ein paar mehr Hintergrundinformationen zu Salting einfügen
+Dadurch, dass SHA-256 ein viel genutztes Verfahren ist, gibt es so genannte \textit{Rainbow Tables}. Das sind vorgefertigte Tabellen, welche häufig genutzte Passwörter in gehashter Form auflisten. Viele Internetnutzer benutzen simple Passwörter, weil diese leichter zu merken sind, obwohl gilt, je leichter das Passwort, desto wahrscheinlicher, dass es in einer \textit{Rainbow Table} enthalten ist. Besonders problematisch wird es, wenn Passwörter und Nutzernamen auf Seiten wiederverwendet werden, denn dann können sich Hacker auch auf anderen Seiten als jemand anderes ausgeben. Eine fehlende Sicherheit gefährdet damit nicht nur die Person im jeweiligen System, sondern auch in anderen Programmen.
 
-Ein \textit{Salt} ist eine Zeichenfolge, welche an das Passwort gehangen wird. Wenn der Nutzer sein Passwort an den Server schickt, wird dieses mit dem \textit{Salt} gehashed und mit den Resultat in der Datenbank verglichen. Der Salt ist dabei für jeden Nutzer einzigartig. Das Problem ist, der Server muss wissen, was der Salt ist. Herkömmliche Methoden sind eine Kombination aus dem Nutzernamen oder einer zufällig generierten Zahlenfolge. Da in vielen System der Nutzername öffentlich zugänglich ist, bietet sich dieser nicht als Salt an. Eine bessere Methode ist die zufällige Wahl eines salts. Von dem \textit{National Institute of Standards and Technology}
-wird ein \textit{Salt} mit der Länge von 512 Bits empfohlen. Dieser \textit{Salt} wird dann neben dem Passwort in der Datenbank gespeichert. Der Hacker ist zwar in der Lage den \textit{Salt} zu lesen, aber \textit{salting} ist dennoch effektiv, da die \textit{Rainbow Tables} mit dem \textit{Salt} neu generiert werden müssen. Dadurch, dass SHA-Algorithmen sehr zeitintensiv sind und für eine große Menge an möglichen Passwörtern ausgeführt werden müssen, kann sehr viel Zeit gewonnen werden. Des Weiteren haben die Hacker, für den Fall, dass das Passwort in der \textit{Rainbow Table} erscheint, nur ein Passwort. Der Prozess muss für jedes Passwort aus der Datenbank wiederholt werden.
+Um den \textit{Rainbow Tables} entgegen zu wirken, wurden \textit{Password Salts} eingeführt. Ein \textit{Salt} ist eine Zeichenfolge, welche an das Passwort gehangen wird. Wenn der Nutzer sein Passwort an den Server schickt, wird dieses mit dem \textit{Salt} gehashed und mit den Resultat in der Datenbank verglichen. Der \textit{Salt} ist dabei für jeden Nutzer einzigartig. Das Problem ist, der Server muss wissen, was der \textit{Salt} ist. Herkömmliche Methoden sind eine Kombination aus dem Nutzernamen oder einer zufällig generierten Zahlenfolge. Da in vielen System der Nutzername öffentlich zugänglich ist, bietet sich dieser nicht als \textit{Salt} an. Eine bessere Methode ist die zufällige Wahl eines \textit{Salts}. Von dem \textit{National Institute of Standards and Technology}
+wird ein \textit{Salt} mit der Länge von 512 Bits empfohlen, welcher neben dem Passwort in der Datenbank gespeichert wird. Der Hacker ist zwar in der Lage den \textit{Salt} zu lesen, aber \textit{salting} ist dennoch effektiv, da die \textit{Rainbow Tables} mit dem \textit{Salt} neu generiert werden müssen. Dadurch, dass SHA-Algorithmen sehr zeitintensiv sind und für eine große Menge an möglichen Passwörtern ausgeführt werden müssen, kann sehr viel Zeit gewonnen werden. Des Weiteren haben die Hacker, für den Fall, dass das Passwort in der \textit{Rainbow Table} erscheint, nur ein Passwort. Der Prozess muss für jedes Passwort aus der Datenbank wiederholt werden.
 
-Ergänzend zu dem \textit{Salt} gibt es den \textit{secret Salt} oder auch \textit{Pepper}. Wie der Name schon verrät, ist der nicht in der Datenbank enthalten. Der \textit{Pepper} wird meist extern in einem \textit{hardware security module} (HSM) gespeichert. Prinzipiell funktioniert der \textit{Pepper} genauso wie ein normaler \textit{Salt}. \textit{Pepper} wurde im Zuge der besonderen Lernleistung jedoch nicht implementiert.
-
-\subsection{Verschlüsseln von Nutzerdaten}
+Damit ist das Thema Sicherheit aber noch nicht abgehakt, denn es liegen weiter die Daten auf dem Server in Klartext vor. Generell kann davon ausgegangen werden, dass auf dem Server keine zu schützenden Daten gespeichert werden. Zwar liegen Nutzerdaten vor, diese dürfen aber nicht verschlüsselt werden, weil die E-Mail zum einloggen benötigt wird und in verschlüsselter Form nicht mehr zum Vergleich genutzt werden kann. Der Nutzername wird anderen Nutzern angezeigt, wenn von ihr Ordner veröffentlicht werden, womit ein verschlüsseln ebenfalls hinfällig ist. Des Weiteren dürfen die öffentlichen Ordner nicht verschlüsselt werden, da andere Nutzer den Inhalt einsehen können sollen. Dazu kommt noch, dass ein Nutzer vertrauliche Daten nicht in einem öffentlichen Ordner auf der Datenbank speichern sollte. Außerdem fallen persönliche und geheime Daten nicht in den Bereich von \textit{Spaced Repetition}, was bedeutet, das solche Daten sowieso nie in die Applikation und das System, geschweige dem Server gelangen. Aufgrund dessen, ist eine Verschlüsselung der Daten zum jetzigen Zeitpunkt der Applikation nicht von Nöten, lässt sich aber für folge Versionen in Erwägung ziehen.
 
 % -------------------------------------------
 % Design - Entscheidungen
 % -------------------------------------------
 
-\section{Design-Entscheidungen}
+\section{Plattform- und Design-Entscheidungen}
+\label{section:design}
 % Absatz auf Grundlage dieser Quelle https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Ausstattung-Gebrauchsgueter/Tabellen/liste-infotechnik-d.html;jsessionid=DD550FAF7C09C50227B95CDE6720900E.live742 noch einmal neu verfassen
 Da die abzudeckende Nutzerzahl möglichst hoch sein soll, bietet sich eine Applikation für mobile Endgeräte an. 88,8\% der deutschen Bevölkerung ab 14 Jahren besitzt laut \cite{Statista:Smartphonenutzung} ein Handy. Dadurch, dass die Applikation auf jüngere Nutzer fokussiert ist, kann sogar von einem größeren Prozentsatz gesprochen werden. Innerhalb der 14- bis 49-jährigen liegt der Anteil der Nutzer sogar bei über 95\%. Gegenüberstellend sind die Haushalte mit einem Computer. 2021 lag der Prozentsatz bei 91,9\% und schließt sich aus stationären Computern und mobilen Computern zusammen \cite{Statista:Computernutzung}. Die Prozentsätze liegen zwar nah bei einander, sind aber anders zu gewichten. Während sich der Anteil an Smartphone Nutzern auf einzelne Personen bezieht, sind bei den Haushalten mit Computern auch Familien Computer zu berücksichtigen. Der Anteil der deutschen Haushalte mit einem stationären Computer beläuft sich auf 44\%. Dazu kommen noch 83,4\% Haushalte mit einem mobilen Computer, welche auch Tabletts inkludieren \cite{Statista:Computernutzung}. Aus den Zahlen lässt vermuten, dass 8,5\% der Haushalte über einen geteilten Computer arbeiten, was jedoch nicht mit Zahlen belegbar ist. Ein geteilter Computer, bietet unter normalen Umständen kein gutes Lernumfeld. Ein weiterer Punkt ist die Verfügbarkeit. Während mithilfe des Handys unterwegs gelernt werden kann, muss bei einem Computer explizit Zeit genommen werden. Die Portabilität ist als entscheidender Punkt für die Entwicklung einer mobilen Anwendung zu nennen. Eine Webseite ist in Hinsicht auf Plattformverfügbarkeit das Optimum, muss sich einer Applikation jedoch geschlagen geben, da eine Internetverbindung gebraucht wird und das Unterwegs ein mögliches Hindernis sein kann. Dazu ist die Nutzererfahrung für mobile Nutzer deutlich schlechter im Gegensatz zu einer Applikation. Für Desktop Anwender ist eine Webseite in Zukunft in Erwägung zu ziehen, wird jedoch nicht weiter in dieser Ausarbeitung thematisiert.
 
-Um möglichst verständlich zu sein, orientiert sich das User Interface der Applikation an den von Google typischen Designrichtlinien. Damit werden Assoziationen, die durch andere Applikation schon gefestigt worden sind, übernommen. Im Umkehrschluss können auch Assoziationen durch die Applikation geknüpft werden und das technische Verständnis gefördert werden.
+Um möglichst verständlich zu sein, orientiert sich das User Interface der Applikation an den von Google typischen Designrichtlinien. Damit werden Assoziationen, die durch andere Applikation schon gefestigt worden sind, übernommen. Im Umkehrschluss werden auch Assoziationen durch die Applikation geknüpft und das technische Verständnis wird gefördert.
 
-Die visuellen Elemente wurden möglichst eindeutig und einfach gestaltet, genauso wie über die komplette Anwendung einheitlich gehalten. Das sorgt nicht nur für rundum ein schöneres Bild, sondern macht die Nutzung einfacher. Durch einheitliche Darstellung, haben Aktionen immer eine erwartete Reaktion, welche sich nicht von der wirklichen Reaktion unterscheidet. Das unterstützt den Prozess des Knüpfen von Assoziationen.
+Die visuellen Elemente wurden möglichst eindeutig und einfach gestaltet, sowie über die komplette Anwendung einheitlich gehalten. Das sorgt nicht nur für rundum ein schöneres Bild, sondern macht die Nutzung einfacher. Durch die einheitliche Darstellung, haben Aktionen immer eine erwartete Reaktion, welche sich nicht von der wirklichen Reaktion unterscheidet, was das knüpfen von Assoziationen unterstützt.
 
-Die Farb- und Formwahl der Elemente hat den Fokus auf leichtes Design. Es wurden zu aggressive Farbkombinationen vermieden, um Lesen von Inhalten angenehm zu gestalten. Dazu sind die genutzten Farben klar von einander zu entscheiden, was Nutzern mit eingeschränkter Sehleistung zu gute kommt.
+Die Farb- und Formwahl der Elemente hat den Fokus auf leichtes Design. Es wurden zu aggressive Farbkombinationen vermieden, um Lesen von Inhalten angenehm zu gestalten. Dazu sind die genutzten Farben klar von einander zu entscheiden, was Nutzern mit eingeschränkter Sehleistung zu gute kommt. Des Weiteren haben alle Widgets abgerundete Kanten, um das sanfte Bild der Benutzeroberfläche zu unterstützen.
